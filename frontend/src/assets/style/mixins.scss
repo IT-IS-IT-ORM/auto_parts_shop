@@ -1,0 +1,126 @@
+@mixin flex(
+  $direction: row,
+  $justifyContent: flex-start,
+  $alignItems: flex-start,
+  $alignSelf: auto,
+  $alignContent: stretch,
+  $gap: 0,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+  align-self: $alignSelf;
+  align-content: $alignContent;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+@mixin flexCenter($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin positioned(
+  $position: absolute,
+  $zIndex: 1,
+  $top: auto,
+  $left: auto,
+  $bottom: auto,
+  $right: auto
+) {
+  position: $position;
+  z-index: $zIndex;
+  top: $top;
+  left: $left;
+  bottom: $bottom;
+  right: $right;
+}
+
+@mixin positionCenter($position: absolute, $zIndex: 2) {
+  position: $position;
+  z-index: $zIndex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// $type options: `thin` | `none`
+// $onlyOnHover options: `1` | `0`
+@mixin useScroll($type: thin, $onlyOnHover: 0) {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background: transparent;
+
+    @if ($type == none) {
+      display: none;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    @if ($onlyOnHover == 1) {
+      background: transparent;
+    }
+    @if ($onlyOnHover == 0) {
+      background: var(--c-primary);
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: var(--c-primary);
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0;
+  }
+
+  &:hover::-webkit-scrollbar-track {
+    background: #000;
+  }
+}
+
+@mixin useFont($size: 20px, $weight: 400, $color: var(--c-text)) {
+  /* 全局字体 */
+  font-family: "Ubuntu", sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  font-display: swap;
+  color: $color;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin maxRow($rowCount, $rowHeight) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $rowCount;
+  line-height: $rowHeight;
+  max-height: $rowCount * $rowHeight;
+}
+
+@mixin svgStyle(
+  $size: 24px,
+  $color: var(--c-primary),
+  $fill: $color,
+  $stroke: $color
+) {
+  fill: $fill;
+  color: $color;
+  width: $size;
+  height: $size;
+
+  path {
+    stroke: $stroke;
+  }
+}

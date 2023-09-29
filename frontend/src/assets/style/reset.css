@@ -1,0 +1,63 @@
+/**
+ * 重置 CSS 基本样式
+ */
+
+*,
+*::before,
+*::after {
+  /* 丝滑滚动 */
+  scroll-behavior: smooth;
+  /* 移除间距 */
+  margin: 0;
+  padding: 0;
+  /* 重置排版 */
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  font-display: swap;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 盒模型 */
+  box-sizing: border-box;
+}
+
+/* 全局滚动条样式 */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background: transparent;
+}
+/* 全局滚动条样式 */
+*::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: transparent;
+}
+/* 全局滚动条样式 */
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--c-primary);
+}
+/* 全局滚动条样式 */
+*::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+/* 全局滚动条样式 */
+*:hover::-webkit-scrollbar-track {
+  background: #000;
+}
+
+html,
+body {
+  /* 移动端 click 事件 触发的 :active 背景色 变更 */
+  -webkit-tap-highlight-color: transparent;
+
+  /* 全局字体 */
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  font-display: swap;
+  color: var(--c-text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,19 @@
+:root {
+  /* 色彩模式 */
+  color-scheme: LIGHT;
+
+  /* 调色盘 */
+  --c-primary: #ec243f;
+  --c-border: #d4d4da;
+  --c-background: rgb(250, 250, 250);
+
+  /* 排版 */
+  --c-text: #1c1819;
+  --c-text-secondary: #888b94;
+
+  /* 过渡贝塞尔曲线 */
+  --transition: 340ms ease;
+
+  /* Shape */
+  --border-radius: 4px;
+}

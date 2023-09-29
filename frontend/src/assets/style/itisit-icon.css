@@ -1,0 +1,8 @@
+.itisit-icon {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+  font-size: var(--icon-size, 24px);
+  color: var(--c-primary);
+  fill: var(--c-primary);
+  cursor: var(--icon-cursor, pointer);
+}
