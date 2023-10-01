@@ -21,3 +21,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.product)+' '+ str(self.user)
+
+class Category(models.Model):
+
+    title = models.CharField(max_length=200, null=False, default='default category')
+    parent = models.ForeignKey("self", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+# class CategoryChild(models.Model):
+
+#     title = models.CharField(max_length=200, null=False, default='default category')
+#     father = models.ForeignKey
