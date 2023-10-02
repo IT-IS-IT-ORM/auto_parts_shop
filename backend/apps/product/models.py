@@ -8,8 +8,13 @@ class Category(models.Model):
     title = models.CharField(max_length=200, null=False, default='default category')
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
+
+    # 此函数将返回Category名 若有父类Category将一并返回
     def __str__(self):
-        return self.title
+        if self.parent:
+            return str(self.parent)+' '+str(self.title)
+        else:
+            return str(self.title)
 
 class ProductGallery(models.Model):
 
