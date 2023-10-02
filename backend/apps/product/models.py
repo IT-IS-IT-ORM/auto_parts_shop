@@ -6,7 +6,7 @@ from user.models import User
 class Category(models.Model):
 
     title = models.CharField(max_length=200, null=False, default='default category')
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -23,21 +23,23 @@ class Product(models.Model):
     price = models.FloatField(default=0, null=False)
     is_new = models.BooleanField(default=False)
 
-    gallery = models.ManyToManyField(ProductGallery)
+    gallery = models.ManyToManyField(ProductGallery, null=True, blank=True)
 
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-    applicable = models.ManyToManyField(Category, related_name='applicables', null=True)
+    applicable = models.ManyToManyField(Category, related_name='applicables')
 
 
-
+    def __str__(self):
+        return self.title
+        
 
 class Comment(models.Model):
 
     text = models.TextField(null=False)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
