@@ -11,7 +11,6 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'title']
 
-
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -31,13 +30,16 @@ class ProductSerializer(serializers.ModelSerializer):
         categories.append(category)
         categories.append(subCategory)
 
+        
         product['seller'] = UserSerializer(seller).data
+
+        # category自定义
         product['category'] = CategorySerializer(categories, many=True).data
         
+
+        # applicable里自定义 没有用到serializer 而是调用Model里的__str__函数
         for index, item in enumerate(product['applicable']):
             applicable = Category.objects.get(id=item)
-            product['applicable'][index] = CategorySerializer(applicable).data
-        
-
+            product['applicable'][index] = {'id': applicable.id, 'title':str(applicable)}
 
         return product
