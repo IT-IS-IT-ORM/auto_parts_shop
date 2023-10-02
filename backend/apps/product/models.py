@@ -23,7 +23,7 @@ class Product(models.Model):
     price = models.FloatField(default=0, null=False)
     is_new = models.BooleanField(default=False)
 
-    # gallery = models.ManyToManyField(ProductGallery)
+    gallery = models.ManyToManyField(ProductGallery)
 
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
