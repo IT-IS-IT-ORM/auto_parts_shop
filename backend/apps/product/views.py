@@ -16,13 +16,4 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    # def get(self, request):
-
-    #     products = Product.objects.all()
-    #     print(products)
-    #     serializer = ProductSerializer(products, many=True)
-    #     print(serializer.data)
-    #     data = serializer.data
-
-    #     return Response({'data':data})
         
