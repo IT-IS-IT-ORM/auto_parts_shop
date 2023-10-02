@@ -30,8 +30,10 @@ class ProductSerializer(serializers.ModelSerializer):
         categories.append(category)
         categories.append(subCategory)
 
-        
+
         product['seller'] = UserSerializer(seller).data
+        #消除token
+        del product['seller']['token']
 
         # category自定义
         product['category'] = CategorySerializer(categories, many=True).data
