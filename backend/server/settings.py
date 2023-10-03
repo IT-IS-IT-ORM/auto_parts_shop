@@ -48,6 +48,9 @@ INSTALLED_APPS = [
 
     'user',
     # 添加业务app
+    'product',
+    'order'
+
 ]
 
 MIDDLEWARE = [
