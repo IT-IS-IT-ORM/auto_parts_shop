@@ -1,250 +1,11 @@
 <template>
   <main class="home-page">
+    <FilterPanel />
     <!--下面很长的都是card-->
     <div class="card-container">
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img class="card-img" src="~/assets/image/logo.png" alt="" />
-        </div>
-        <div class="whole-info-card">
-          <div class="price-purchase">16 010 000 ₸</div>
-          <div class="type-purchase"><a href="#">toyota</a></div>
-          <div class="info-purchase">2020 г., 2.5 л, бензин, КПП автомат</div>
-          <div class="card-city">Алматы</div>
-          <div class="time-view-icon-card">
-            <span class="publish-time-card">1 окт.</span>
-            <div class="card-view">
-              <Icon
-                class="card-view-icon"
-                name="ic:round-remove-red-eye"
-              ></Icon>
-              <div class="card-view-numbers">3000</div>
-            </div>
-            <div class="card-favourite-icon-div">
-              <Icon
-                class="card-favourite-icon"
-                name="solar:folder-favourite-star-outline"
-              ></Icon>
-            </div>
-          </div>
-        </div>
-      </div>
+      <template v-for="(item, itemInd) in items" :key="itemInd">
+        <CommonItemCard  :item-data="item"/>
+      </template>
     </div>
   </main>
 </template>
@@ -256,6 +17,20 @@ import { useNuxtApp } from "nuxt/app";
 import _ from "lodash";
 // Hooks
 import useRequest from "vue-hooks-plus/es/useRequest";
+// Components
+import FilterPanel from '~/components/common/FilterPanel.vue';
+
+const items = ref<any[]>([]);
+
+onMounted(() => {
+  // fetch items from back-end
+
+  // now generating for test
+  for(let i: number = 0; i < 2; i++) {
+    items.value.push(itemsGenerator.generateItem());
+  }
+})
+
 </script>
 
 <style scoped lang="scss">
