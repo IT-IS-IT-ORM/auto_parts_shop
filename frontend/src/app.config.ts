@@ -2,7 +2,7 @@ export default defineAppConfig({
   nuxtIcon: {
     size: "24px",
     class: "itisit-icon",
-    color: "#EC243F",
+    color: "#23e5db",
     aliases: {
       nuxt: "logos:nuxt-icon",
     },
