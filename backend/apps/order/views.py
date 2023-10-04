@@ -7,13 +7,14 @@ from product.models import Product
 from .models import Order
 from .serializers import OrderSerializer
 
+from utils.authentication import LoginRequiredAuthentication
+
 # Create your views here.
 
 
 class OrderAPIView(APIView):
 
-    # authentication_classes = []
-
+    authentication_classes = [LoginRequiredAuthentication]
 
     # queryset = Order.objects.all()
     # serializer_class = OrderSerializer
@@ -21,17 +22,9 @@ class OrderAPIView(APIView):
 
     def get(self, request):
 
-        user_id =  request.GET['id']
-        
-        if user_id:
-            user = User.objects.get(id=user_id)
-            if int(user.role) == 1:
-                order = Order.objects.filter(buyer=user)
-            else:
-                order = Order.objects.filter(seller=user)
+        order = Order.objects.all()
 
-
-        serializer = OrderSerializer(order, many=True)
+        serializer = OrderSerializer(order, many=True, context = {'user': self.request.user})
         return Response(serializer.data)
 
         
