@@ -163,7 +163,7 @@ const mobileMenuVisible = ref(false);
     max-width: 820px;
   }
   @media (min-width: 580px) {
-    .mobile-header {
+    .mobile-header,.mobile-menu {
       display: none;
     }
   }
