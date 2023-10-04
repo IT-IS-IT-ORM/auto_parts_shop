@@ -4,8 +4,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Category
+from .serializers import ProductSerializer, CategorySerializer
 # Create your views here.
 
 class ProductViewSet(ModelViewSet):
@@ -17,3 +17,10 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
         
+class CategoryViewSet(ModelViewSet):
+
+    authentication_classes = []
+
+
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
