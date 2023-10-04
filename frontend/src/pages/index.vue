@@ -1,5 +1,6 @@
 <template>
   <main class="home-page">
+    <FilterPanel />
     <!--下面很长的都是card-->
     <div class="card-container">
       <div class="card">
@@ -256,6 +257,8 @@ import { useNuxtApp } from "nuxt/app";
 import _ from "lodash";
 // Hooks
 import useRequest from "vue-hooks-plus/es/useRequest";
+// Components
+import FilterPanel from '~/components/common/FilterPanel.vue';
 </script>
 
 <style scoped lang="scss">
