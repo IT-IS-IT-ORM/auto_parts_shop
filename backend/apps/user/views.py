@@ -3,8 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from user.serializers import (
-    UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer)
-from user.models import User
+    UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer, FavoriteSerializer)
+from user.models import (User, Favorite
+                         )
 
 from utils.jwt import create_jwt
 from utils.authentication import LoginRequiredAuthentication
@@ -82,3 +83,22 @@ class ChangePasswordAPIView(APIView):
 
         data = UserSerializer(instance=user).data
         return Response({'data': data, 'Formatted': 1})
+
+
+class MyFavoriteAPIView(APIView):
+    """
+    My Favorite API
+    """
+    authentication_classes = [LoginRequiredAuthentication]
+
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+
+    def get_serializer_context(self):
+        """
+        update context object
+        """
+        context = super().get_serializer_context()
+        context.update({'request': self.request})
+
+        return context
