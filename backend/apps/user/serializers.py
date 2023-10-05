@@ -113,6 +113,5 @@ class FavoriteSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         item = super().to_representation(instance)
-        item['token'] = create_jwt({'uid': user.get('id')})
         
         return item
