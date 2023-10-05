@@ -4,7 +4,7 @@
   <Head>
     <Meta charset="UTF-8" />
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <Meta name="theme-color" content="#23e5db" />
+    <Meta name="theme-color" content="#002F34" />
     <meta name="color-scheme" content="light" />
 
     <Meta httpEquiv="x-ua-compatible" content="IE=edge" />

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductViewSet
+from .views import ProductViewSet, CategoryViewSet
 
 from rest_framework import routers
 from django.conf import settings
@@ -10,7 +10,8 @@ if settings.DEBUG:
 else:
     router = routers.SimpleRouter()
 
-router.register(r'', ProductViewSet)
+router.register(r'category', CategoryViewSet)
+router.register(r'product', ProductViewSet)
 
 urlpatterns = router.urls
 
