@@ -85,7 +85,7 @@ class ChangePasswordAPIView(APIView):
         return Response({'data': data, 'Formatted': 1})
 
 
-class MyFavoriteAPIView(APIView):
+class FavoriteListAPIView(APIView):
     """
     My Favorite API
     """
