@@ -2,10 +2,10 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from user.serializers import (
-    UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer, FavoriteSerializer)
-from user.models import (User, Favorite
-                         )
+from django.http.response import JsonResponse
+
+from user.serializers import ( UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer, FavoriteSerializer)
+from user.models import (User, Favorite)
 
 from utils.jwt import create_jwt
 from utils.authentication import LoginRequiredAuthentication
@@ -87,18 +87,29 @@ class ChangePasswordAPIView(APIView):
 
 class FavoriteListAPIView(APIView):
     """
-    My Favorite API
+    Favorite API
     """
     authentication_classes = [LoginRequiredAuthentication]
 
-    queryset = Favorite.objects.all()
-    serializer_class = FavoriteSerializer
+    def get(self, request):
+        # 获取当前用户的收藏列表
+        user_id = request.user.id
+        favorites = Favorite.objects.filter(user_id=user_id)
 
-    def get_serializer_context(self):
-        """
-        update context object
-        """
-        context = super().get_serializer_context()
-        context.update({'request': self.request})
+        # 序列化收藏列表
+        favorites_data = FavoriteSerializer(favorites, many=True).data
 
-        return context
+        # 构建响应
+        response_data = {'data': favorites_data, 'Formatted': 1}
+        return Response(response_data)
+    # queryset = Favorite.objects.all()
+    # serializer = FavoriteSerializer
+
+    # def get_serializer_context(self):
+    #     """
+    #     update context object
+    #     """
+    #     context = super().get_serializer_context()
+    #     context.update({'request': self.request})
+
+    #     return context

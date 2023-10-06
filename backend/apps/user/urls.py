@@ -21,7 +21,7 @@ urlpatterns += [
     # Change password API
     path('auth/change-password/', ChangePasswordAPIView.as_view()),
     # Add Favorito API
-    path('auth/Myfavorite', FavoriteListAPIView.as_view()),
+    path('auth/Myfavorite/', FavoriteListAPIView.as_view()),
 ]
 
 app_name = 'user'

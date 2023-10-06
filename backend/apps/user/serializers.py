@@ -8,6 +8,7 @@ from product.models import Product
 from utils.jwt import create_jwt
 from utils.custom_exception import CustomException
 
+from django.shortcuts import get_list_or_404
 
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(label='ID', read_only=True)
@@ -104,14 +105,13 @@ class ChangePasswordSerializer(serializers.Serializer):
         return user
     
 
-class FavoriteSerializer(serializers.Serializer):
-    # item = serializers.CharField(label='你收藏的牛头')
+class FavoriteSerializer(serializers.ModelSerializer):
+    product_id = serializers.CharField(label='产品名字', source='product.title', read_only=True)
 
     class Meta:
         model = Favorite
-        fields = '__all__'
+        fields = ['product_id']
 
     def to_representation(self, instance):
-        item = super().to_representation(instance)
-        
-        return item
+        favorite = super().to_representation(instance)
+        return favorite
