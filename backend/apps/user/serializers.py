@@ -110,7 +110,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favorite
-        fields = ['product_id']
+        fields = ['product_name']
 
     def to_representation(self, instance):
         favorite = super().to_representation(instance)
