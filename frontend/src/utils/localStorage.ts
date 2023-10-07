@@ -80,7 +80,7 @@ export const localStorage: localStorageProperties = {
 		window.localStorage.setItem(key, serializedData);
 	},
 
-	_DATA_PREFIX: 'Baier_CARGO',
+	_DATA_PREFIX: 'AutoParts',
 	_DATA_VERSION: '1.0.0',
 
 	get _VERSION_MARK_STRING() {

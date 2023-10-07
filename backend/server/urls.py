@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/', include('user.urls')),
     # 添加业务app
     path('api/product/', include('product.urls')),
+    path('api/order/', include('order.urls')),
 
     re_path(r'^media/(?P<path>.*)$', serve,
             {"document_root": settings.MEDIA_ROOT}),

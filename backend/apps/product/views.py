@@ -4,8 +4,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Category
+from .serializers import ProductSerializer, CategorySerializer
 # Create your views here.
 
 class ProductViewSet(ModelViewSet):
@@ -16,13 +16,11 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    # def get(self, request):
-
-    #     products = Product.objects.all()
-    #     print(products)
-    #     serializer = ProductSerializer(products, many=True)
-    #     print(serializer.data)
-    #     data = serializer.data
-
-    #     return Response({'data':data})
         
+class CategoryViewSet(ModelViewSet):
+
+    authentication_classes = []
+
+
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
