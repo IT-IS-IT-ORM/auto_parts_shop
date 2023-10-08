@@ -9,7 +9,7 @@ import _ from "lodash";
 
 export const defaultUserState: I_User = {
   id: -1,
-  role: "-1",
+  role: role.guest,
   phone: "",
   fullname: "",
   createTime: "",
@@ -17,7 +17,7 @@ export const defaultUserState: I_User = {
 };
 
 export const useUser = defineStore("user", {
-  state() {
+  state: () => {
     return defaultUserState;
   },
 
