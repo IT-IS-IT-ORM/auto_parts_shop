@@ -36,9 +36,10 @@ class OrderSerializer(serializers.ModelSerializer):
             # 烂尾妈的
             # 目标 获取卖家的订单 Order里不创建seller字段的情况下
         # else:
-        #     # product = Product.objects.filter(seller=user)
+        #     product = Product.objects.filter(seller=user)
 
-        #     for 
+        #     for p in product:
+                
         #     my_order = Order.objects.filter(product=)
         #     print('I AM SELLER')
 
