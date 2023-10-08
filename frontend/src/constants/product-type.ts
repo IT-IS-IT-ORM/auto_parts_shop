@@ -1,7 +1,7 @@
 export const TYPE_LIST = [
   {
     key: "sm",
-    label: "Жеңіл машина",
+    label: "Жеңіл автомобил",
   },
   {
     key: "md",
