@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Product, Category
 
-from user.models import User
+from user.models import User, Favorite
 from user.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -45,3 +45,12 @@ class ProductSerializer(serializers.ModelSerializer):
             product['applicable'][index] = {'id': applicable.id, 'title':str(applicable)}
 
         return product
+    
+
+class FavoriteSerializer(serializers.ModelSerializer):
+
+    product = ProductSerializer()
+
+    class Meta:
+        model = Favorite
+        fields = '__all__'

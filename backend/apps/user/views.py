@@ -2,10 +2,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.http.response import JsonResponse
-
-from user.serializers import ( UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer, FavoriteSerializer)
+from user.serializers import ( UserSerializer, LoginSerializer, RegisterSerializer, ChangePasswordSerializer)
 from user.models import (User, Favorite)
+from product.serializers import FavoriteSerializer
 
 from utils.jwt import create_jwt
 from utils.authentication import LoginRequiredAuthentication
@@ -102,14 +101,3 @@ class FavoriteListAPIView(APIView):
         # 构建响应
         response_data = {'data': favorites_data, 'Formatted': 1}
         return Response(response_data)
-    # queryset = Favorite.objects.all()
-    # serializer = FavoriteSerializer
-
-    # def get_serializer_context(self):
-    #     """
-    #     update context object
-    #     """
-    #     context = super().get_serializer_context()
-    #     context.update({'request': self.request})
-
-    #     return context

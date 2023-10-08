@@ -2,13 +2,11 @@ from django.contrib.auth.hashers import check_password
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from user.models import User, Favorite
-from product.models import Product
+from user.models import User
 
 from utils.jwt import create_jwt
 from utils.custom_exception import CustomException
 
-from django.shortcuts import get_list_or_404
 
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(label='ID', read_only=True)
@@ -103,15 +101,3 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.password = new_password
         user.save()
         return user
-    
-
-class FavoriteSerializer(serializers.ModelSerializer):
-    product_id = serializers.CharField(label='产品名字', source='product.title', read_only=True)
-
-    class Meta:
-        model = Favorite
-        fields = ['product_name']
-
-    def to_representation(self, instance):
-        favorite = super().to_representation(instance)
-        return favorite
