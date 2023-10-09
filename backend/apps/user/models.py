@@ -4,6 +4,7 @@ from django.db.models.signals import pre_save
 from django.contrib.auth.hashers import make_password
 
 
+
 class User(models.Model):
     '''User model'''
 
