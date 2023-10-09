@@ -54,6 +54,7 @@ const productCover = computed(() => {
 @import "~/assets/style/mixins.scss";
 
 .product-card {
+    height: max-content;
     cursor: pointer;
     border-radius: var(--border-radius);
     border: 1px solid var(--c-border);
