@@ -11,7 +11,7 @@ else:
     router = routers.SimpleRouter()
 
 router.register(r'category', CategoryViewSet)
-router.register(r'product', ProductViewSet)
+router.register(r'', ProductViewSet)
 
 urlpatterns = router.urls
 
