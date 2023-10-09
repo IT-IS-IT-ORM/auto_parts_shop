@@ -1,13 +1,12 @@
 <template>
-    <div class="filter-panel"></div>
+    <h1>My orders</h1>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+
+</script>
 
 <style scoped lang="scss">
 @import "~/assets/style/mixins.scss";
-
-.filter-panel {
-    
-}
 </style>

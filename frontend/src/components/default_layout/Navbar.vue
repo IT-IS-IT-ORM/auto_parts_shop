@@ -6,50 +6,34 @@
     </NuxtLink>
 
     <ul class="actions">
-      <Icon
-        class="favorite-icon-btn"
-        name="material-symbols:favorite-outline-rounded"
-        role="button"
-      />
+      <Icon class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button"
+        @click.stop="handleNav('/profile?tab=favorite')" />
 
-      <NuxtLink class="profile" to="/profile">
+      <a class="profile" href="/profile?tab=settings" @click.prevent="handleNav('/profile?tab=settings')">
         <Icon name="material-symbols:person" />
         <span>Жекепарақша</span>
-      </NuxtLink>
+      </a>
 
-      <a-button>Объявление шығару</a-button>
+      <Button variant="secondary" @click="handleNav('/product/add')">Объявление шығару</Button>
     </ul>
 
-    <Icon
-      class="burger-btn-open"
-      :class="{ active: !mobileNavbarVisible }"
-      name="quill:hamburger"
-      role="button"
-      @click="mobileNavbarVisible = true"
-    />
-    <Icon
-      class="burger-btn-close"
-      :class="{ active: mobileNavbarVisible }"
-      name="mdi:close"
-      role="button"
-      @click="mobileNavbarVisible = false"
-    />
+    <Icon class="burger-btn-open" :class="{ active: !mobileNavbarVisible }" name="quill:hamburger" role="button"
+      @click="mobileNavbarVisible = true" />
+    <Icon class="burger-btn-close" :class="{ active: mobileNavbarVisible }" name="mdi:close" role="button"
+      @click="mobileNavbarVisible = false" />
   </header>
 
-  <div
-    class="mobile-navbar"
-    :class="{ 'mobile-navbar--show': mobileNavbarVisible }"
-  >
+  <div class="mobile-navbar" :class="{ 'mobile-navbar--show': mobileNavbarVisible }">
     <ul class="menu">
-      <li class="item">
+      <li class="item" @click.stop="handleNav('/profile?tab=favorite')">
         <Icon name="material-symbols:favorite-outline-rounded" />
         <span>Таңдаулылар</span>
       </li>
-      <li class="item">
+      <li class="item" @click.stop="handleNav('/profile?tab=settings')">
         <Icon class="profile-icon" name="material-symbols:person" />
         <span>Жекепарақша</span>
       </li>
-      <li class="item">
+      <li class="item" @click.stop="handleNav('/product/add')">
         <Icon name="material-symbols:add-circle-outline-rounded" />
         <span>Объявление шығару</span>
       </li>
@@ -60,6 +44,13 @@
 </template>
 
 <script setup lang="ts">
+// Store
+import { useUser } from '~/stores/user';
+// Componentns
+import Button from '~/components/common/Button.vue';
+
+const user = useUser();
+const router = useRouter();
 import { useEventListener } from "vue-hooks-plus";
 
 const mobileNavbarVisible = ref(false);
@@ -85,8 +76,14 @@ function onWindowScroll() {
   }
   lastScroll = scroll;
 }
+
+const handleNav = (path: string) => {
+  console.log('user: ', user, user.isAuthenticated);
+  if (user.isAuthenticated) {
+    router.push(path);
+  }
+};
 </script>
-<script setup lang="js"></script>
 
 <style scoped lang="scss">
 @import "~/assets/style/mixins.scss";
@@ -94,6 +91,7 @@ function onWindowScroll() {
 .navbar.under80 {
   transform: translateY(-80px);
 }
+
 .navbar {
   width: 100%;
   height: 74px;
@@ -132,22 +130,6 @@ function onWindowScroll() {
     .profile {
       color: #fff;
       @include flex($alignItems: center, $gap: 8px);
-    }
-
-    :deep(.ant-btn) {
-      height: auto;
-      padding: 4px 16px;
-      border: 4px solid #fff;
-      @include flexCenter;
-
-      span {
-        font-weight: 500;
-      }
-
-      &:hover {
-        color: #fff;
-        background-color: var(--c-primary);
-      }
     }
   }
 

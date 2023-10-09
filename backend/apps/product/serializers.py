@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from .models import Product, Category
+from .models import Product, Category, ProductGallery
 
-from user.models import User
+from user.models import User, Favorite
 from user.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -44,4 +44,17 @@ class ProductSerializer(serializers.ModelSerializer):
             applicable = Category.objects.get(id=item)
             product['applicable'][index] = {'id': applicable.id, 'title':str(applicable)}
 
+        for index, item in enumerate(product['gallery']):
+            image = ProductGallery.objects.get(id=item)
+            product['gallery'][index] = {'id': image.id, 'name': image.name, 'image': image.image.url}
+
         return product
+    
+
+class FavoriteSerializer(serializers.ModelSerializer):
+
+    product = ProductSerializer()
+
+    class Meta:
+        model = Favorite
+        fields = '__all__'
