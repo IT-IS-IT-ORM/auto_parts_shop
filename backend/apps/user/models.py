@@ -54,4 +54,4 @@ class Favorite(models.Model):
     def __str__(self):
         return str(self.user)+' '+ str(self.product)
 
-        
+

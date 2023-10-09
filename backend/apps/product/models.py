@@ -19,7 +19,9 @@ class Category(models.Model):
 class ProductGallery(models.Model):
 
     # 图片field goes here，保存路径我不确定 先留着
-    pass
+    
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='product/', null=True, max_length=250)
 
 
 class Product(models.Model):
