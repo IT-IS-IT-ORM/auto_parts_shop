@@ -1,5 +1,5 @@
 <template>
-  <header class="itisit-container navbar" :class="{ under80: under80 }">
+  <header class="itisit-container navbar" :class="{ under80 }">
     <NuxtLink class="site-logo" to="/">
       <img src="~/assets/image/logo.png" alt="Auto Parts" />
       <h3>Auto-parts</h3>
@@ -60,25 +60,19 @@
 </template>
 
 <script setup lang="ts">
+import { useEventListener } from "vue-hooks-plus";
+
 const mobileNavbarVisible = ref(false);
 
 watch(mobileNavbarVisible, (visible) => {
   document.body.style.overflow = visible ? "hidden" : "hidden auto";
 });
 
-const under80 = ref<boolean>(false);
+const under80 = ref(false);
 let lastScroll = 0;
 
 onMounted(() => {
-  if (process.client) {
-    window.addEventListener("scroll", onWindowScroll);
-  }
-});
-
-onBeforeUnmount(() => {
-  if (process.client) {
-    window.removeEventListener("scroll", onWindowScroll);
-  }
+  useEventListener("scroll", onWindowScroll);
 });
 
 function onWindowScroll() {
@@ -101,10 +95,10 @@ function onWindowScroll() {
   transform: translateY(-80px);
 }
 .navbar {
-    transition: 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
   width: 100%;
   height: 74px;
   background-color: var(--c-primary);
+  transition: 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
   @include flex($alignItems: center);
   @include positioned($position: fixed, $top: 0, $left: 0, $zIndex: 90);
 
