@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.contrib.auth.hashers import make_password
 
+from product.models import Product
 
 class User(models.Model):
     '''User model'''
@@ -44,7 +45,6 @@ def user_pre_save(sender, instance, **kwargs):
         instance.password = make_password(instance.password)
 
 
-from product.models import Product
 
 class Favorite(models.Model):
     

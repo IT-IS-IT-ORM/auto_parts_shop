@@ -8,8 +8,9 @@ urlpatterns = [
 
     # user
     path('api/', include('user.urls')),
-    # 添加业务app
+    # Product
     path('api/product/', include('product.urls')),
+    # Order
     path('api/order/', include('order.urls')),
 
     re_path(r'^media/(?P<path>.*)$', serve,
