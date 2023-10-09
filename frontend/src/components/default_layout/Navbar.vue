@@ -14,7 +14,7 @@
         <span>Жекепарақша</span>
       </a>
 
-      <a-button @click.stop="handleNav('/product/add')">Объявление шығару</a-button>
+      <Button variant="secondary" @click="handleNav('/product/add')">Объявление шығару</Button>
     </ul>
 
     <Icon class="burger-btn-open" :class="{ active: !mobileNavbarVisible }" name="quill:hamburger" role="button"
@@ -46,6 +46,8 @@
 <script setup lang="ts">
 // Store
 import { useUser } from '~/stores/user';
+// Componentns
+import Button from '~/components/common/Button.vue';
 
 const user = useUser();
 const router = useRouter();
@@ -134,22 +136,6 @@ const handleNav = (path: string) => {
     .profile {
       color: #fff;
       @include flex($alignItems: center, $gap: 8px);
-    }
-
-    :deep(.ant-btn) {
-      height: auto;
-      padding: 4px 16px;
-      border: 4px solid #fff;
-      @include flexCenter;
-
-      span {
-        font-weight: 500;
-      }
-
-      &:hover {
-        color: #fff;
-        background-color: var(--c-primary);
-      }
     }
   }
 
