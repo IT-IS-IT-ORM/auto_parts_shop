@@ -40,11 +40,12 @@ const handleItemClick = (key: I_Product['type']) => {
 @import "~/assets/style/mixins.scss";
 
 .type-list {
+    width: 100%;
     padding: 8px;
     border-radius: var(--border-radius);
     border: 1px solid var(--c-border);
     background-color: #fff;
-    @include flex($alignItems: center);
+    @include flex($alignItems: center, $wrap: wrap);
 
     .item {
         flex: 0 0 132px;

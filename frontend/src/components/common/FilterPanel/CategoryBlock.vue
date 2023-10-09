@@ -118,5 +118,17 @@ const toggleSelectedState = (category: any, isSubCategory: boolean) => {
             left: 24%;
         }
     }
+
+    @media screen and (max-width: 768px) {
+        max-width: 100%;
+        width: 100%;
+        padding: 16px;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .category {
+            width: max-content;
+        }
+    }
 }
 </style>

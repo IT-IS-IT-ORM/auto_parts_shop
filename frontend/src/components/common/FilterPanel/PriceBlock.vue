@@ -23,10 +23,14 @@
                     :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')" />
             </div>
         </div>
+
+        <Button>17 объявление көрсету</Button>
     </div>
 </template>
 
 <script setup lang="ts">
+// Components
+import Button from '~/components/common/Button.vue';
 
 const form = ref({
     hasPhoto: false,
@@ -49,8 +53,9 @@ watch(form, (val) => $emit('change', val));
     border: 1px solid var(--c-border);
     background-color: #fff;
 
+
+
     .row {
-        margin-bottom: 24px;
         @include flex($justifyContent: space-between, $alignItems: center, $gap: 24px);
 
         .field {
@@ -93,6 +98,25 @@ watch(form, (val) => $emit('change', val));
 
     :deep(.ant-input-number) {
         width: 145px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 16px;
+
+        .inputs {
+            .ant-input-number {
+                width: auto;
+                flex: 1 1 auto;
+            }
+
+            .spliter {
+                flex: 0 0 8px;
+            }
+        }
+
+        .custom-button {
+            width: 100%;
+        }
     }
 }
 </style>

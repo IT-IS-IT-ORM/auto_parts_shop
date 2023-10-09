@@ -18,16 +18,14 @@ import PriceBlock from './PriceBlock.vue';
 
 .filter-panel {
     width: 100%;
-    /* padding: 16px; */
-    padding: 16px 24px;
-    border: 1px solid var(--c-border);
-    border-radius: var(--border-radius);
-    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 1px 3px 1px;
-    
     display: grid;
     grid-template-columns: max-content;
-    grid-template-areas: 'category type'
+    grid-auto-rows: max-content 1fr;
+    grid-template-areas:
+        'category type'
         'category price';
+    align-items: start;
+    gap: 8px;
 
     .type-block {
         grid-area: type;
@@ -43,12 +41,21 @@ import PriceBlock from './PriceBlock.vue';
 
 
     &>:deep(.block) {
-        @include flex($direction: column, $gap: 12px);
+        @include flex($direction: column, $gap: 20px);
 
         .title {
             font-weight: 500;
             font-size: 24px;
         }
+    }
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: 100%;
+        grid-template-areas:
+            'type'
+            'category'
+            'price';
+        gap: 24px;
     }
 }
 </style>
