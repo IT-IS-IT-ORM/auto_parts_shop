@@ -1,6 +1,20 @@
 from django.db import models
 from user.models import User 
+import os
+from uuid import uuid4
+
 # Create your models here.
+
+def wrapper(instance, filename):
+    ext = filename.split('.')[-1]
+        # get filename
+    if instance.pk:
+        filename = '{}.{}'.format(instance.pk, ext)
+    else:
+        # set filename as random string
+        filename = '{}.{}'.format(uuid4().hex, ext)
+     # return the whole path to the file
+    return os.path.join('products', filename)
 
 
 class Category(models.Model):
@@ -20,8 +34,11 @@ class ProductGallery(models.Model):
 
     # 图片field goes here，保存路径我不确定 先留着
     
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='product/', null=True, max_length=250)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(upload_to=wrapper, null=True, max_length=250)
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
