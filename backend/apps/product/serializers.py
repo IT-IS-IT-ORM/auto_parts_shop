@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, Category
+from .models import Product, Category, ProductGallery
 
 from user.models import User, Favorite
 from user.serializers import UserSerializer
@@ -43,6 +43,10 @@ class ProductSerializer(serializers.ModelSerializer):
         for index, item in enumerate(product['applicable']):
             applicable = Category.objects.get(id=item)
             product['applicable'][index] = {'id': applicable.id, 'title':str(applicable)}
+
+        for index, item in enumerate(product['gallery']):
+            image = ProductGallery.objects.get(id=item)
+            product['gallery'][index] = {'id': image.id, 'name': image.name, 'image': image.image.url}
 
         return product
     
