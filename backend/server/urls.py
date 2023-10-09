@@ -9,9 +9,9 @@ urlpatterns = [
     # user
     path('api/', include('user.urls')),
     # Product
-    path('api/product/', include('product.urls')),
+    path('api/', include('product.urls')),
     # Order
-    path('api/order/', include('order.urls')),
+    path('api/', include('order.urls')),
 
     re_path(r'^media/(?P<path>.*)$', serve,
             {"document_root": settings.MEDIA_ROOT}),
