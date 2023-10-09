@@ -25,7 +25,9 @@
 
   <Body>
     <NuxtLayout>
-      <NuxtPage />
+      <a-config-provider :locale="kk_KZ" :theme="ANTD_THEME">
+        <NuxtPage />
+      </a-config-provider>
     </NuxtLayout>
   </Body>
 
@@ -33,6 +35,9 @@
 </template>
 
 <script setup lang="ts">
+// Antd
+import kk_KZ from "ant-design-vue/locale/kk_KZ";
+import { ANTD_THEME } from '~/constants/antd-theme';
 // Vue
 import { onBeforeMount } from "vue";
 // Store
