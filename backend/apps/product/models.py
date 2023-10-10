@@ -55,6 +55,10 @@ class Product(models.Model):
 
     applicable = models.ManyToManyField(Category, related_name='applicables')
 
+    views = models.IntegerField(default=0)
+
+    create_date = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.title
