@@ -1,4 +1,5 @@
 <template>
+  <CommonShowModal :settings="settings" :close-modal="closeModal"/>
   <header class="itisit-container navbar" :class="{ under80 }">
     <NuxtLink class="site-logo" to="/">
       <img src="~/assets/image/logo.png" alt="Auto Parts" />
@@ -7,7 +8,8 @@
 
     <ul class="actions">
       <Icon class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button"
-        @click.stop="handleNav('/profile?tab=favorite')" />
+        @click.stop="handleNav('/profile?tab=favorite')
+        " />
 
       <a class="profile" href="/profile?tab=settings" @click.prevent="handleNav('/profile?tab=settings')">
         <Icon name="material-symbols:person" />
@@ -56,10 +58,15 @@ import { useEventListener } from "vue-hooks-plus";
 const mobileNavbarVisible = ref(false);
 
 watch(mobileNavbarVisible, (visible) => {
+
   document.body.style.overflow = visible ? "hidden" : "hidden auto";
+
 });
 
 const under80 = ref(false);
+const settings = ref<{showModal: boolean}>({
+  showModal: false,
+})
 let lastScroll = 0;
 
 onMounted(() => {
@@ -81,8 +88,17 @@ const handleNav = (path: string) => {
   console.log('user: ', user, user.isAuthenticated);
   if (user.isAuthenticated) {
     router.push(path);
+    return;
   }
+  // User is not authed
+  settings.value.showModal = true;
 };
+
+
+const closeModal = () => {
+  settings.value.showModal = false;
+  navigateTo('/auth/login');
+}
 </script>
 
 <style scoped lang="scss">
