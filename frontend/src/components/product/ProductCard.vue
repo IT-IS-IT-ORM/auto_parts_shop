@@ -33,7 +33,7 @@ const { product } = toRefs(props);
 
 const productCover = computed(() => {
     if (product.value.gallery.length > 0) {
-        return product.value.gallery[0];
+        return product.value.gallery[0].image;
     }
 
     return dynamicAsset.image('product/no-image.jpg');
