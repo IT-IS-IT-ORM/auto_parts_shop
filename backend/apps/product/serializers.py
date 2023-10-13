@@ -39,21 +39,33 @@ class ProductSerializer(serializers.ModelSerializer):
 
         # gallery自定义
         gallery = ProductImage.objects.filter(product=product['id'])
-        product['gallery'] = list(map(lambda image: ProductImageSerializer(instance=image).data, gallery))
+        product['gallery'] = list(
+            map(
+                lambda image: ProductImageSerializer(
+                    instance=image, context=self.context).data, gallery
+            )
+        )
 
         return product
 
 
-
 class ProductImageSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=ProductImage.objects.all(), write_only=True)
+    product = serializers.PrimaryKeyRelatedField(
+        queryset=ProductImage.objects.all(), write_only=True)
+
     class Meta:
         model = ProductImage
         fields = '__all__'
 
+    
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.image)
+
 class FavoriteSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), write_only=True)
 
     class Meta:
         model = Favorite
