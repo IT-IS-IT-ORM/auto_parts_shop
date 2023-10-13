@@ -8,5 +8,12 @@ import _fetch from "~/service/fetch";
 export const API_GetProductList = (): Promise<I_Response<I_Product[]>> =>
   _fetch.get("/product/");
 
+export const API_GetProduct = (
+  productId: number
+): Promise<I_Response<I_Product>> => _fetch.get(`/product/${productId}/`);
+
+export const API_UpdateProduct = (): Promise<I_Response<I_Product>> =>
+  _fetch.patch("/product/");
+
 export const API_AddProduct = (data: {}): Promise<I_Response<I_Product>> =>
   _fetch.post("/product/", data);
