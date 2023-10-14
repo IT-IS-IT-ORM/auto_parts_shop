@@ -19,7 +19,7 @@
             <div class="row-2">
                 <span>9 окт.</span>
                 <Icon name="ic:baseline-remove-red-eye" />
-                <span>{{ product.price }}</span>
+                <span>{{ product.views }}</span>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@ const { product } = toRefs(props);
 
 const productCover = computed(() => {
     if (product.value.gallery.length > 0) {
-        return product.value.gallery[0];
+        return product.value.gallery[0].image;
     }
 
     return dynamicAsset.image('product/no-image.jpg');

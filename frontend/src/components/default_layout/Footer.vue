@@ -6,18 +6,36 @@
         </h3>
 
         <p class="footer-text">
-            Крупнейший онлайн-сервис объявлений Казахстана
+            Қазақстандағы ең ірі автокөлік бөлшектерін сату алаңы
             <br />
-            Все онлайн-объявления Казахстана на OLX - здесь вы найдете то, что
-            искали! Нажав на кнопку "Подать объявление", вы сможете разместить
-            объявление на любую тематику легко и быстро.
+            Қазақстандағы барлық автокөлік бөлшектері Auto-parts сайтында - мұнда бәрін таба аласыз!
+            «Жариялау» батырмасын басу арқылы сіз жариялай аласыз
+            кез келген көлікке арналған бөлшектер тез және оңай.
             <br />
-            С помощью сервиса OLX вы сможете купить или продать из рук в руки
-            практически все, что угодно.
+            Auto-parts қызметін пайдалана отырып, қолдан қолға сатып алуға немесе сатуға болады
+            барлығы дерлік.
         </p>
 
         <div class="social-media">
+            <p>Auto-parts әлеуметтік желілердегі қауымдастықтары:</p>
 
+            <ul class="list">
+                <li class="item">
+                    <a href="#">
+                        <Icon name="fa6-brands:square-facebook" />
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="#">
+                        <Icon name="bi:instagram" />
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="#">
+                        <Icon name="fa6-brands:youtube" />
+                    </a>
+                </li>
+            </ul>
         </div>
     </footer>
 </template>
@@ -55,6 +73,29 @@
         line-height: 20px;
         color: #fff;
         text-align: center;
+    }
+
+    .social-media {
+        margin-top: 40px;
+        @include flex($direction: column, $alignItems: center, $gap: 12px);
+
+        p {
+            max-width: 820px;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .list {
+            list-style: none;
+            @include flex($gap: 24px);
+
+            svg {
+                @include svgStyle($color: #fff);
+            }
+        }
     }
 }
 </style>

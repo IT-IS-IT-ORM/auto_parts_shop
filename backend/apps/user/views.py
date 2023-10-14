@@ -84,13 +84,15 @@ class ChangePasswordAPIView(APIView):
         return Response({'data': data, 'Formatted': 1})
 
 
-class FavoriteListAPIView(APIView):
+class FavoriteViewSet(ModelViewSet):
     """
     Favorite API
     """
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
     authentication_classes = [LoginRequiredAuthentication]
 
-    def get(self, request):
+    def list(self, request):
         # 获取当前用户的收藏列表
         user_id = request.user.id
         favorites = Favorite.objects.filter(user_id=user_id)

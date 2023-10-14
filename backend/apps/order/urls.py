@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import OrderAPIView
+from order.views import OrderAPIView
 
 
 from rest_framework import routers
@@ -15,5 +15,3 @@ router.register(r'order', OrderAPIView)
 
 
 urlpatterns = router.urls
-
-

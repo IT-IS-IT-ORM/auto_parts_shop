@@ -4,7 +4,6 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from user.models import User
 
-from utils.jwt import create_jwt
 from utils.custom_exception import CustomException
 
 
@@ -26,12 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
-    def to_representation(self, instance):
-        user = super().to_representation(instance)
-        user['token'] = create_jwt({'uid': user.get('id')})
-        
-        return user
 
 
 class LoginSerializer(serializers.Serializer):

@@ -4,7 +4,6 @@ from django.db.models.signals import pre_save
 from django.contrib.auth.hashers import make_password
 
 
-
 class User(models.Model):
     '''User model'''
 
@@ -45,14 +44,15 @@ def user_pre_save(sender, instance, **kwargs):
         instance.password = make_password(instance.password)
 
 
-from product.models import Product
-
 class Favorite(models.Model):
-    
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.user)+' '+ str(self.product)
+        return f'{self.user} - {self.product}'
 
-
+    class Meta:
+        db_table = 'favorite'
+        verbose_name = '收藏夹'
+        verbose_name_plural = '收藏夹'

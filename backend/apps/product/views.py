@@ -1,26 +1,27 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from product.models import Product, Category
+from product.serializers import ProductSerializer, CategorySerializer
 
-from .models import Product, Category
-from .serializers import ProductSerializer, CategorySerializer
-# Create your views here.
 
 class ProductViewSet(ModelViewSet):
 
     authentication_classes = []
-
-
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-        
+    def get_serializer_context(self):
+        """
+        update context object
+        """
+        context = super().get_serializer_context()
+        context.update({'request': self.request})
+
+        return context
+
+
 class CategoryViewSet(ModelViewSet):
 
     authentication_classes = []
-
-
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

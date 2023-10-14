@@ -11,12 +11,18 @@ export interface I_SubCategory {
   parentId: number;
 }
 
+export interface I_ProductImage {
+  id: number;
+  image: string;
+}
+
 export interface I_Product {
   id: number;
   title: string;
   price: number;
   isNew: boolean;
-  gallery: string[];
+  views: number;
+  gallery: I_ProductImage[];
   type: "sm" | "md" | "lg";
   seller: Omit<I_User, "token">;
   category: Array<I_Category | I_SubCategory>;
