@@ -21,6 +21,7 @@ export interface I_Product {
   title: string;
   price: number;
   isNew: boolean;
+  views: number;
   gallery: I_ProductImage[];
   type: "sm" | "md" | "lg";
   seller: Omit<I_User, "token">;

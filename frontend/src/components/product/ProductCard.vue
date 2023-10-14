@@ -19,7 +19,7 @@
             <div class="row-2">
                 <span>9 окт.</span>
                 <Icon name="ic:baseline-remove-red-eye" />
-                <span>{{ product.price }}</span>
+                <span>{{ product.views }}</span>
             </div>
         </div>
     </div>
