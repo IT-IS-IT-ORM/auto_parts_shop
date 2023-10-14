@@ -3,7 +3,8 @@
     <FilterPanel class="filter-panel" />
 
     <div class="card-list">
-      <ProductCard v-for="(product, index) in productList" :key="index" :product="product" />
+      <ProductCard v-for="(product, index) in productList" :key="index" :product="product"
+        @click="$router.push(`/product/${product.id}`)" />
     </div>
   </main>
 </template>
@@ -69,6 +70,7 @@ useRequest(API_GetProductList, {
     grid-template-columns: repeat(2, minmax(0, 100%));
     gap: 24px;
   }
+
   @media screen and (max-width: 576px) {
     gap: 8px;
   }
