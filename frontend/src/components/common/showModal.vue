@@ -2,7 +2,7 @@
     <div class="modal">
      
       <a-modal v-model:open="settings.showModal" title="Basic Modal" @ok="handleOk">
-        <p>to do this action,you have to log in</p>
+        <p>to do this ,you have to log in</p>
        
       </a-modal>
     </div>
