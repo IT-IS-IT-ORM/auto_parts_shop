@@ -24,6 +24,7 @@ export interface I_Product {
   views: number;
   gallery: I_ProductImage[];
   type: "sm" | "md" | "lg";
+  createTime: string;
   seller: Omit<I_User, "token">;
   category: Array<I_Category | I_SubCategory>;
   applicable: I_SubCategory[];

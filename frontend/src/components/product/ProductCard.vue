@@ -17,7 +17,7 @@
             </div>
 
             <div class="row-2">
-                <span>9 окт.</span>
+                <span>{{ dateFormatter(product.createTime, false) }}</span>
                 <Icon name="ic:baseline-remove-red-eye" />
                 <span>{{ product.views }}</span>
             </div>
@@ -27,6 +27,9 @@
   
 <script setup lang="ts">
 import type { I_Product } from '~/types/product'
+
+import dateFormatter from '~/utils/formatDate';
+
 
 const props = defineProps<{ product: I_Product; }>();
 const { product } = toRefs(props);
@@ -41,12 +44,12 @@ const productCover = computed(() => {
 
 // 格式化 浏览量
 // const formatViews = computed(()=>{
-    // product.value.
+// product.value.
 // })
 
 // 格式化 创建日期
 // const formatCreateTime = computed(()=>{
-    // product.value.
+// product.value.
 // })
 </script>
   
