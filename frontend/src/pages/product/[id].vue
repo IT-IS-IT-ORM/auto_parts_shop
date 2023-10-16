@@ -1,7 +1,7 @@
 <template>
     <main class="itisit-container product-detail-page">
         <Breadcrumb class="breadcrumb" :items="bredcrumbItems" />
-        <ProductGallery class="product-gallery" />
+        <ProductGallery class="product-gallery" :gallery="product?.gallery ?? []" />
     </main>
 </template>
 
@@ -64,6 +64,11 @@ onBeforeMount(() => {
 
     .breadcrumb {
         margin-bottom: 40px;
+    }
+
+    .product-gallery {
+        width: 100%;
+        height: 560px;
     }
 }
 </style>
