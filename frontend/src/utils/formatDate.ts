@@ -26,7 +26,7 @@ export default function dateFormatter(
   const monthStr = getCurrentMonth(date, fullversion);
 
   if (fullversion) {
-    return `${date.getDate()} ${monthStr} ${date.getFullYear}`;
+    return `${date.getDate()} ${monthStr} ${date.getFullYear()}ж.`;
   }
 
   return `${date.getDate()} ${monthStr}.`;
