@@ -1,5 +1,5 @@
 <template>
-    <a-button class="custom-button" :class="[`custom-button--${variant}`]">
+    <a-button class="custom-button" :class="[`custom-button--${variant}`, block && `custom-button--block`]">
         <slot></slot>
     </a-button>
 </template>
@@ -10,7 +10,11 @@ import { PropType } from 'vue';
 
 export type allowedButtonVariants = 'primary' | 'secondary';
 
-const props = defineProps({
+defineProps({
+    block: {
+        type: Boolean,
+        default: false
+    },
     variant: {
         type: String as PropType<allowedButtonVariants>,
         default: 'primary'
@@ -29,6 +33,10 @@ const props = defineProps({
 
     :deep(span) {
         font-weight: 500;
+    }
+
+    &--block {
+        width: 100%;
     }
 
     &--primary {
