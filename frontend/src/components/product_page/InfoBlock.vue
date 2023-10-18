@@ -4,9 +4,7 @@
             Сипаттама
         </h4>
 
-        <p class="description">
-            {{ product.description }}
-        </p>
+        <p v-html="description" class="description"></p>
     </div>
 </template>
 
@@ -14,12 +12,12 @@
 // Types
 import type { I_Product } from '~/types/product';
 
-// Components
-import Button from '~/components/common/Button.vue';
-
-defineProps<{
+const props = defineProps<{
     product: I_Product
 }>();
+
+// 多个 \n 带来的 margin 会塌陷为 1 个
+const description = computed(() => props.product.description.replaceAll('\\n', '<div class="splitor"></div>'));
 </script>
 
 <style scoped lang="scss">
@@ -41,8 +39,16 @@ defineProps<{
         margin-bottom: 24px;
     }
 
-    .description {}
+    .description {
+        word-break: break-word;
+        line-height: 24px;
+        font-size: 16px;
+        color: var(--c-primary);
 
-
+        :deep(.splitor) {
+            /* 多个 \n 带来的 margin 会塌陷为 1 个 */
+            margin: 12px 0;
+        }
+    }
 }
 </style>
