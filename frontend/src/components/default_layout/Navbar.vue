@@ -1,5 +1,5 @@
 <template>
-  <CommonShowModal :settings="settings" :close-modal="closeModal"/>
+  <CommonShowModal :settings="settings" :close-modal="closeModal" />
   <header class="itisit-container navbar" :class="{ under80 }">
     <NuxtLink class="site-logo" to="/">
       <img src="~/assets/image/logo.png" alt="Auto Parts" />
@@ -7,8 +7,7 @@
     </NuxtLink>
 
     <ul class="actions">
-      <Icon class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button"
-        @click.stop="handleNav('/profile?tab=favorite')
+      <Icon class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button" @click.stop="handleNav('/profile?tab=favorite')
         " />
 
       <a class="profile" href="/profile?tab=settings" @click.prevent="handleNav('/profile?tab=settings')">
@@ -64,7 +63,7 @@ watch(mobileNavbarVisible, (visible) => {
 });
 
 const under80 = ref(false);
-const settings = ref<{showModal: boolean}>({
+const settings = ref<{ showModal: boolean }>({
   showModal: false,
 })
 let lastScroll = 0;
@@ -135,10 +134,6 @@ const closeModal = () => {
   .actions {
     @include flex($alignItems: center, $gap: 32px);
 
-    @media screen and (max-width: 768px) {
-      display: none;
-    }
-
     svg {
       @include svgStyle($color: #fff, $size: 28px);
     }
@@ -146,6 +141,30 @@ const closeModal = () => {
     .profile {
       color: #fff;
       @include flex($alignItems: center, $gap: 8px);
+    }
+
+    @media screen and (max-width: 880px) {
+      gap: 24px;
+
+      svg {
+        @include svgStyle($color: #fff, $size: 24px);
+      }
+
+      .profile span {
+        font-size: 18px;
+      }
+
+      :deep(.custom-button) {
+        padding: 4px 10px;
+
+        span {
+          font-size: 18px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      display: none;
     }
   }
 
