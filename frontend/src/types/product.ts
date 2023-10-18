@@ -19,6 +19,7 @@ export interface I_ProductImage {
 export interface I_Product {
   id: number;
   title: string;
+  description: string;
   price: number;
   isNew: boolean;
   views: number;

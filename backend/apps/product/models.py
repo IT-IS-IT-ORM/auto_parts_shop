@@ -23,6 +23,7 @@ class Category(models.Model):
 class Product(models.Model):
     '''商品模型类'''
     title = models.CharField(max_length=32)
+    description = models.TextField()
     price = models.IntegerField()
     is_new = models.BooleanField()
     views = models.IntegerField(default=0, blank=True)
