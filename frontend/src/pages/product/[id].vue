@@ -2,6 +2,7 @@
     <main class="itisit-container product-detail-page">
         <Breadcrumb class="breadcrumb" :items="bredcrumbItems" />
         <ProductGallery class="product-gallery" :gallery="product?.gallery ?? []" />
+        <BuyBlock v-if="product" class="buy-block" :product="product" />
     </main>
 </template>
 
@@ -20,6 +21,7 @@ import { useRequest } from 'vue-hooks-plus';
 // Components
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import ProductGallery from '~/components/product/ProductGallery.vue';
+import BuyBlock from '~/components/product_page/BuyBlock.vue';
 
 const route = useRoute();
 const router = useRouter();
