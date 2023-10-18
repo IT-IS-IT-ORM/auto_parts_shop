@@ -7,7 +7,14 @@
             <Icon name="material-symbols:favorite-outline-rounded" role="button" />
         </div>
 
-        <h1 class="name">{{ product.title }}</h1>
+        <div class="name">
+            <div class="is-new">
+                {{ product.isNew ? 'Жаңа' : 'Ескі' }}
+            </div>
+            <h1>
+                {{ product.title }}
+            </h1>
+        </div>
         <span class="price">{{ product.price }} тг</span>
         <Button block>Заказ жасау</Button>
     </div>
@@ -53,6 +60,19 @@ defineProps<{
 
     .name {
         margin: 8px 0 16px;
+        @include flex($alignItems: center, $gap: 8px);
+
+        .is-new {
+            font-size: 16px;
+            padding: 6px 10px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--c-border);
+        }
+
+        h1 {
+            font-size: 18px;
+            @include maxRow($rowCount: 4, $rowHeight: 24px);
+        }
     }
 
     .price {
