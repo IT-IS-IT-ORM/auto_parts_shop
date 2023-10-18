@@ -7,8 +7,8 @@
             <Icon name="material-symbols:favorite-outline-rounded" role="button" />
         </div>
 
-        <p class="name">{{ product.title }}</p>
-        <p class="price">{{ product.price }} тг</p>
+        <h1 class="name">{{ product.title }}</h1>
+        <span class="price">{{ product.price }} тг</span>
         <Button block>Заказ жасау</Button>
     </div>
 </template>
@@ -36,7 +36,12 @@ defineProps<{
     background-color: #fff;
     @include flex($direction: column);
 
+    @media screen and (max-width: 576px) {
+        padding: 16px;
+    }
+
     .row {
+        width: 100%;
         @include flex($justifyContent: space-between, $alignItems: center, $gap: 8px);
 
         .create-time {
@@ -54,6 +59,10 @@ defineProps<{
         font-weight: 500;
         font-size: 22px;
         margin-bottom: 16px;
+    }
+
+    .custom-button {
+        margin-top: auto;
     }
 }
 </style>
