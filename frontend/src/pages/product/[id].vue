@@ -103,7 +103,7 @@ onBeforeMount(() => {
                 &>* {
                     flex: 1 1 auto;
                     width: calc(50% - 16px);
-                    height: 212px;
+                    min-height: 212px;
                 }
             }
         }
