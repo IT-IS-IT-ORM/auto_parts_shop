@@ -12,7 +12,7 @@
                 </template>
                 <ProfileSettings />
             </a-tab-pane>
-            <a-tab-pane key="product">
+            <a-tab-pane v-if="user.role === role.provider" key="product">
                 <template #tab>
                     <span>
                         <Icon name="icon-park-outline:ad-product" />
