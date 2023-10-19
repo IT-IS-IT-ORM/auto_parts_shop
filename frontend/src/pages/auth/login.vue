@@ -57,3 +57,23 @@ const onFinish = (values: any) => {
     })
 };
 </script>
+
+<style scoped lang="scss">
+@import "~/assets/style/mixins.scss";
+
+.login-page {
+    @include flexCenter;
+
+    .auth-template {
+        width: 365px;
+        padding: 24px;
+        border-radius: var(--border-radius);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+        @media screen and (max-width: 576px) {
+            padding: 16px;
+            box-shadow: none;
+        }
+    }
+}
+</style>
