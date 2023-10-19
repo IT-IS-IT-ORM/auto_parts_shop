@@ -42,6 +42,20 @@ const toggleSelectedState = (category: any, isSubCategory: boolean) => {
         category.subCategories.forEach((subCategory: any) => {
             subCategory.isSelected = checkedState;
         })
+    } else {
+        // 找到父类别
+        const parentCategory = categoryList.value.find(_category => _category.subCategories.some(subCategory => subCategory.id === category.id));
+
+        // 子类别 且 被选择
+        if (checkedState) {
+            // 所有子类别都是被选择状态
+            if (parentCategory!.subCategories.every(subCategory => subCategory.isSelected)) {
+                parentCategory!.isSelected = true;
+            }
+        } else {
+            // 任意子类未被选择, 父类也不被选择
+            parentCategory!.isSelected = false;
+        }
     }
 }
 
