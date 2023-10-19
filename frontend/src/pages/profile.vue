@@ -3,7 +3,7 @@
         <h3 class="title">Жеке кабинет</h3>
 
         <a-tabs v-model:activeKey="tab" :onChange="handleChangeTab">
-            <a-tab-pane key="settings" :disabled="!user.isAuthenticated">
+            <a-tab-pane key="settings">
                 <template #tab>
                     <span>
                         <Icon name="material-symbols:settings-outline-rounded" />
@@ -103,7 +103,7 @@ const handleChangeTab = (activeKey: 'settings' | 'favorite') => {
             @include flex($alignItems: center, $gap: 8px);
 
             @media screen and (max-width: 576px) {
-                font-size: 12px;
+                font-size: 18px;
             }
         }
     }
