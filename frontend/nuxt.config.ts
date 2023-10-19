@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   css: [
     "~/assets/style/variables.css",
     "~/assets/style/reset.css",
+    "~/assets/style/antd.css",
     // Global class
     "~/assets/style/itisit-container.css",
     "~/assets/style/itisit-icon.css",

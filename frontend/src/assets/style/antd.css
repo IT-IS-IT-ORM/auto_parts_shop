@@ -1,0 +1,12 @@
+@media screen and (max-width: 576px) {
+  .ant-modal .ant-modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ant-modal .ant-modal-footer > * {
+    flex: 1 1 auto;
+    margin: 0 !important;
+  }
+}
