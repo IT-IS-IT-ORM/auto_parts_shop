@@ -1,5 +1,4 @@
 <template>
-  <CommonShowModal :settings="settings" :close-modal="closeModal" />
   <header class="itisit-container navbar" :class="{ under80 }">
     <NuxtLink class="site-logo" to="/">
       <img src="~/assets/image/logo.png" alt="Auto Parts" />
@@ -47,25 +46,22 @@
 <script setup lang="ts">
 // Store
 import { useUser } from '~/stores/user';
+import { useModal } from '~/stores/modal';
 // Componentns
 import Button from '~/components/common/Button.vue';
 
 const user = useUser();
+const modal = useModal();
 const router = useRouter();
 import { useEventListener } from "vue-hooks-plus";
 
 const mobileNavbarVisible = ref(false);
 
 watch(mobileNavbarVisible, (visible) => {
-
   document.body.style.overflow = visible ? "hidden" : "hidden auto";
-
 });
 
 const under80 = ref(false);
-const settings = ref<{ showModal: boolean }>({
-  showModal: false,
-})
 let lastScroll = 0;
 
 onMounted(() => {
@@ -84,20 +80,24 @@ function onWindowScroll() {
 }
 
 const handleNav = (path: string) => {
-  console.log('user: ', user, user.isAuthenticated);
   if (user.isAuthenticated) {
     router.push(path);
     return;
   }
-  // User is not authed
-  settings.value.showModal = true;
+
+  modal.loginReuiqredModal.open = true;
+  modal.loginReuiqredModal.nextUrl = path;
+  switch (path) {
+    case '/profile?tab=settings':
+      modal.loginReuiqredModal.actionDescription = 'Жекепарақшаға өту';
+      break;
+    case '/profile?tab=favorite':
+      modal.loginReuiqredModal.actionDescription = 'Таңдауларді көру';
+      break;
+    case '/product/add':
+      modal.loginReuiqredModal.actionDescription = 'Объявление шығару';
+  }
 };
-
-
-const closeModal = () => {
-  settings.value.showModal = false;
-  navigateTo('/auth/login');
-}
 </script>
 
 <style scoped lang="scss">

@@ -3,6 +3,7 @@
     <Navbar></Navbar>
     <slot></slot>
     <Footer></Footer>
+    <LoginRequiredModal />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 // Components
 import Navbar from '~/components/default_layout/Navbar.vue';
 import Footer from '~/components/default_layout/Footer.vue';
+import LoginRequiredModal from '~/components/common/LoginRequiredModal.vue';
 </script>
 <style scoped lang="scss">
 @import "~/assets/style/mixins.scss";
