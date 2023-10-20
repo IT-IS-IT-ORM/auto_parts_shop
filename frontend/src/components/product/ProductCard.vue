@@ -5,7 +5,10 @@
         <div class="whole-info-card">
             <div class="row-1">
                 <span class="title">{{ product.title }}</span>
-                <Icon class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button" />
+                <Icon v-if="!product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button"
+                    @click.stop="handleFavorite" />
+                <Icon v-if="product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-rounded" role="button"
+                    @click.stop="handleFavorite" />
             </div>
 
             <span class="price">{{ product.price }} ₸</span>
@@ -26,11 +29,24 @@
 </template>
   
 <script setup lang="ts">
+// Types
 import type { I_Product } from '~/types/product'
 
+// Store
+import { useUser } from '~/stores/user';
+import { useModal } from '~/stores/modal';
+// Hooks
+import { useRequest } from 'vue-hooks-plus';
+// API
+import { API_SetFavorite } from '~/service/api/product-api';
+// Utils
 import dateFormatter from '~/utils/formatDate';
 
+const $emit = defineEmits<{ (event: 'favorite', value: boolean): void }>();
 
+const user = useUser();
+const modal = useModal();
+const route = useRoute();
 const props = defineProps<{ product: I_Product; }>();
 const { product } = toRefs(props);
 
@@ -42,15 +58,21 @@ const productCover = computed(() => {
     return dynamicAsset.image('product/no-image.jpg');
 });
 
-// 格式化 浏览量
-// const formatViews = computed(()=>{
-// product.value.
-// })
+const { loading, runAsync } = useRequest(API_SetFavorite, { manual: true });
 
-// 格式化 创建日期
-// const formatCreateTime = computed(()=>{
-// product.value.
-// })
+const handleFavorite = () => {
+    if (!user.isAuthenticated) {
+        modal.loginReuiqredModal.open = true;
+        modal.loginReuiqredModal.nextUrl = route.path;
+        modal.loginReuiqredModal.actionDescription = 'Таңдауларға қосу';
+        return;
+    }
+
+    const newState = !product.value.isFavorite;
+    runAsync({ productId: product.value.id, isFavorite: newState }).then(() => {
+        $emit('favorite', newState);
+    });
+}
 </script>
   
 <style scoped lang="scss">

@@ -4,7 +4,7 @@
 
     <div class="card-list">
       <ProductCard v-for="(product, index) in productList" :key="index" :product="product"
-        @click="$router.push(`/product/${product.id}`)" />
+        @click="$router.push(`/product/${product.id}`)" @favorite="isFavorite => product.isFavorite = isFavorite" />
     </div>
   </main>
 </template>
