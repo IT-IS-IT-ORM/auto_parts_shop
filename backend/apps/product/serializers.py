@@ -21,6 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         product = super().to_representation(instance)
+        user = self.context.get('request').user
 
         subCategory = Category.objects.get(id=product['category'])
         category = Category.objects.get(id=subCategory.parent.id)
@@ -46,6 +47,12 @@ class ProductSerializer(serializers.ModelSerializer):
             )
         )
 
+        # is_favorite自定义
+        product['is_favorite'] = False
+        print('user.is_authenticated: ', user.is_authenticated, user)
+        if user.is_authenticated:
+            product['is_favorite'] = Favorite.objects.filter(product=product['id'], user=user).exists()
+
         return product
 
 
@@ -57,16 +64,34 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = '__all__'
 
-    
     def get_image_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(obj.image)
 
-class FavoriteSerializer(serializers.ModelSerializer):
+
+class FavoriteSerializer(serializers.Serializer):
+    '''用于获取收藏夹列表'''
     product = ProductSerializer()
     user = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), write_only=True)
+    
+    def to_representation(self, instance):
+        favorite = super().to_representation(instance)
+        return favorite['product']
 
-    class Meta:
-        model = Favorite
-        fields = '__all__'
+class SetFavoriteSerializer(serializers.Serializer):
+    '''用于新增/删除收藏'''
+    product = serializers.IntegerField(write_only=True)
+
+    def create(self):
+        user = self.context.get('user')
+        product_id = self.initial_data['product']
+        product = Product.objects.get(id=product_id)
+
+        return Favorite.objects.create(product=product, user=user)
+
+    def delete(self):
+        user = self.context.get('user')
+        product_id = self.initial_data['product']
+
+        Favorite.objects.get(user=user, product=product_id).delete()
