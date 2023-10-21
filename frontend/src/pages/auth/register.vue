@@ -1,7 +1,14 @@
 <template>
     <main class="register-page">
-        <AuthTemplate title="Тіркелу">
+        <AuthTemplate without-logo title="Тіркелу">
             <a-form :model="registerForm" layout="vertical" autocomplete="off" @finish="onFinish">
+                <a-form-item label="Рол" name="role" :rules="[{ required: true, message: 'Рол таңдаңыз!' }]">
+                    <a-radio-group v-model:value="registerForm.role">
+                        <a-radio :value="role.consumer">Тұтынушы</a-radio>
+                        <a-radio :value="role.provider">Сатушы</a-radio>
+                    </a-radio-group>
+                </a-form-item>
+
                 <a-form-item label="Аты-жөн" name="fullname"
                     :rules="[{ required: true, message: 'Аты-жөн нөмерді енгізіңіз!' }]">
                     <a-input v-model:value="registerForm.fullname" maxLength="30" />
@@ -45,6 +52,7 @@ const user = useUser();
 const router = useRouter();
 
 const registerForm = ref({
+    role: role.consumer,
     fullname: '',
     phone: '',
     password: '',

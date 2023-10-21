@@ -6,7 +6,6 @@ from product.serializers import ProductSerializer, CategorySerializer
 
 class ProductViewSet(ModelViewSet):
 
-    authentication_classes = []
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -22,6 +21,5 @@ class ProductViewSet(ModelViewSet):
 
 class CategoryViewSet(ModelViewSet):
 
-    authentication_classes = []
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

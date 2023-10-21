@@ -22,6 +22,7 @@ export interface I_Product {
   description: string;
   price: number;
   isNew: boolean;
+  isFavorite: boolean;
   views: number;
   gallery: I_ProductImage[];
   type: "sm" | "md" | "lg";

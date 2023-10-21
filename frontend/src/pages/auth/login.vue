@@ -1,6 +1,6 @@
 <template>
     <main class="login-page">
-        <AuthTemplate title="Кіру">
+        <AuthTemplate without-logo title="Кіру">
             <a-form :model="loginForm" layout="vertical" autocomplete="off" @finish="onFinish">
                 <a-form-item label="Телефон" name="phone"
                     :rules="[{ required: true, message: 'Телефон нөмерді енгізіңіз!' }]">

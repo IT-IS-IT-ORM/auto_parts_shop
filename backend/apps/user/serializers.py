@@ -56,6 +56,7 @@ class RegisterSerializer(serializers.Serializer):
         label='手机号', max_length=11, trim_whitespace=True)
     password = serializers.CharField(
         label='密码', write_only=True, max_length=254, trim_whitespace=True)
+    role = serializers.ChoiceField(label='角色', choices=User.avaliable_roles)
 
     def register(self):
         """Жүйеге кіру деректерінің дұрыстығын тексеру"""
@@ -71,8 +72,12 @@ class RegisterSerializer(serializers.Serializer):
 
         fullname = self.initial_data['fullname']
         password = self.initial_data['password']
+        role = self.initial_data['role']
         user = User.objects.create(
-            phone=phone, fullname=fullname, password=password, role='1')
+            phone=phone,
+            fullname=fullname,
+            password=password,
+            role=role)
 
         return user
 
@@ -82,15 +87,15 @@ class ChangePasswordSerializer(serializers.Serializer):
         label='旧密码', write_only=True, max_length=254, trim_whitespace=True)
     new_password = serializers.CharField(
         label='新密码', write_only=True, max_length=254, trim_whitespace=True)
-    
+
     def change_password(self):
         user = self.context.get('user')
         password = self.initial_data['password']
         new_password = self.initial_data['new_password']
-        
+
         if not check_password(password, user.password):
             raise CustomException(message='Ескі құпиясөз қате')
-        
+
         user.password = new_password
         user.save()
         return user
