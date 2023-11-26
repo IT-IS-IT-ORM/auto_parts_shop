@@ -1,9 +1,9 @@
 <template>
     <div class="product-gallery">
-        <div class="prev-btn" role="button" @click="activeIndex !== 0 && (activeIndex -= 1)">
+        <div v-show="hasPrev" class="prev-btn" role="button" @click="activeIndex -= 1">
             <Icon name="ic:baseline-arrow-back-ios" />
         </div>
-        <div class="next-btn" role="button" @click="activeIndex !== gallery.length - 1 && (activeIndex += 1)">
+        <div v-show="hasNext" class="next-btn" role="button" @click="activeIndex += 1">
             <Icon name="ic:baseline-arrow-forward-ios" />
         </div>
 
@@ -15,11 +15,13 @@
 <script setup lang="ts">
 import type { I_Product } from '~/types/product';
 
-defineProps<{
+const props = defineProps<{
     gallery: I_Product['gallery']
 }>();
 
 const activeIndex = ref(0);
+const hasPrev = computed(() => activeIndex.value !== 0);
+const hasNext = computed(() => activeIndex.value !== props.gallery.length - 1);
 </script>
 
 <style scoped lang="scss">
