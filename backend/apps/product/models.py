@@ -22,10 +22,18 @@ class Category(models.Model):
 
 class Product(models.Model):
     '''商品模型类'''
+
+    avaliable_types = (
+        ('sm', 'Жеңіл автомобил'),
+        ('md', 'Фургон'),
+        ('lg', 'Үлкен жүк көлік'),
+    )
+
     title = models.CharField(max_length=32)
     description = models.TextField()
     price = models.IntegerField()
     is_new = models.BooleanField()
+    type = models.CharField(max_length=2, choices=avaliable_types, verbose_name='商品类型')
     views = models.IntegerField(default=0, blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True)
