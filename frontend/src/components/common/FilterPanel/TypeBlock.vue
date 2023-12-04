@@ -21,14 +21,14 @@ import type { I_Product } from '~/types/product';
 // Constants
 import { TYPE_LIST } from '~/constants/product-type';
 
-const $emit = defineEmits<{ (event: 'change', key: I_Product['type'], value: boolean): void }>();
+const $emit = defineEmits<{ (event: 'change', value: I_Product['type'] | null): void }>();
 const typeList = ref(TYPE_LIST.map(type => ({ ...type, isActive: false })));
 
 const handleItemClick = (key: I_Product['type']) => {
     typeList.value.forEach(_type => {
         if (_type.key === key) {
             _type.isActive = !_type.isActive;
-            $emit('change', key, !_type.isActive);
+            $emit('change', _type.isActive ? key : null);
         } else {
             _type.isActive = _type.key === key;
         }
