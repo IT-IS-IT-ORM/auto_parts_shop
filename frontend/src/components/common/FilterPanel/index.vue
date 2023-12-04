@@ -1,16 +1,41 @@
 <template>
     <div class="filter-panel">
-        <TypeBlock class="type-block" />
+        <TypeBlock class="type-block" @change="handleChangeType" />
         <PriceBlock class="price-block" />
         <CategoryBlock class="category-block" />
     </div>
 </template>
 
 <script setup lang="ts">
+// Types
+import type { I_Product } from '~/types/product';
+
 // Components
 import TypeBlock from './TypeBlock.vue';
 import CategoryBlock from './CategoryBlock.vue';
 import PriceBlock from './PriceBlock.vue';
+
+interface I_ProductQuery {
+    categories: number[];
+    subCategories: number[];
+    type: I_Product['type'] | null;
+    hasImage: boolean;
+    isNew: boolean;
+    priceRange: [number, number];
+}
+
+const queryParams = ref<I_ProductQuery>({
+    categories: [],
+    subCategories: [],
+    type: null,
+    hasImage: false,
+    isNew: false,
+    priceRange: [0, 0]
+});
+
+const handleChangeType = (type: I_Product['type'] | null) => {
+    queryParams.value.type = type;
+}
 </script>
 
 <style scoped lang="scss">
