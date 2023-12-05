@@ -14,25 +14,39 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 // Types
 import type { I_Product } from '~/types/product';
 
+// Vue
+import { defineEmits } from 'vue';
 // Constants
 import { TYPE_LIST } from '~/constants/product-type';
 
-const $emit = defineEmits<{ (event: 'change', value: I_Product['type'] | null): void }>();
-const typeList = ref(TYPE_LIST.map(type => ({ ...type, isActive: false })));
+export default {
+    emits: {
+        change: (value: I_Product['type'] | null) => true
+    },
 
-const handleItemClick = (key: I_Product['type']) => {
-    typeList.value.forEach(_type => {
-        if (_type.key === key) {
-            _type.isActive = !_type.isActive;
-            $emit('change', _type.isActive ? key : null);
-        } else {
-            _type.isActive = _type.key === key;
+    setup(_, { emit }) {
+        const typeList = ref(TYPE_LIST.map(type => ({ ...type, isActive: false })));
+
+        const handleItemClick = (key: I_Product['type']) => {
+            typeList.value.forEach(_type => {
+                if (_type.key === key) {
+                    _type.isActive = !_type.isActive;
+                    emit('change', _type.isActive ? key : null);
+                } else {
+                    _type.isActive = _type.key === key;
+                }
+            });
         }
-    });
+
+        return {
+            typeList,
+            handleItemClick,
+        }
+    }
 }
 </script>
 
