@@ -1,8 +1,8 @@
 <template>
     <div class="block">
         <div class="row">
-            <div class="field" @click="form.hasPhoto = !form.hasPhoto">
-                <a-checkbox v-model:checked="form.hasPhoto" />
+            <div class="field" @click="form.hasImage = !form.hasImage">
+                <a-checkbox v-model:checked="form.hasImage" />
                 Сурет
             </div>
             <div class="field" @click="form.isNew = !form.isNew">
@@ -14,17 +14,15 @@
         <div class="field">
             Баға аралық
             <div class="inputs">
-                <a-input-number v-model="form.minPrice" :controls="false"
-                    :formatter="(value: string) => `₸ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                    :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')" />
+                <a-input-number v-model:value="form.minPrice" :controls="false" :min="0"
+                    :formatter="(value: string) => `₸ ${value}`" :parser="(value: string) => value.replace('₸ ', '')" />
                 <span class="spliter"></span>
-                <a-input-number v-model="form.maxPrice" :controls="false"
-                    :formatter="(value: string) => `₸ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                    :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')" />
+                <a-input-number v-model:value="form.maxPrice" :controls="false" :min="(form.minPrice ?? -1) + 1"
+                    :formatter="(value: string) => `₸ ${value}`" :parser="(value: string) => value.replace('₸ ', '')" />
             </div>
         </div>
 
-        <Button>17 объявление көрсету</Button>
+        <Button @click="$emit('search')">17 объявление көрсету</Button>
     </div>
 </template>
 
@@ -33,15 +31,18 @@
 import Button from '~/components/common/Button.vue';
 
 const form = ref({
-    hasPhoto: false,
+    hasImage: false,
     isNew: false,
     minPrice: null as number | null,
     maxPrice: null as number | null,
-})
+});
 
-const $emit = defineEmits<{ (event: 'change', value: typeof form.value): void }>();
+const $emit = defineEmits<{
+    (event: 'change', value: typeof form.value): void,
+    (event: 'search'): void
+}>();
 
-watch(form, (val) => $emit('change', val));
+watch(form, (val) => $emit('change', toRaw(val)), { deep: true });
 </script>
 
 <style scoped lang="scss">
