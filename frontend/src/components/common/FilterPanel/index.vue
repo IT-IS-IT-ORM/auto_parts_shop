@@ -1,8 +1,8 @@
 <template>
     <div class="filter-panel">
-        <TypeBlock class="type-block" @change="handleChangeType" />
-        <PriceBlock class="price-block" />
-        <CategoryBlock class="category-block" />
+        <TypeBlock ref="typeBlock" class="type-block" @change="handleChangeType" />
+        <PriceBlock ref="priceBlock" class="price-block" @change="handleChangePriceBlock" @search="handleSearch" />
+        <CategoryBlock ref="categoryBlock" class="category-block" />
     </div>
 </template>
 
@@ -10,31 +10,88 @@
 // Types
 import type { I_Product } from '~/types/product';
 
+// Routes
+import { useRoute, useRouter } from 'vue-router';
+// Store
+import { useProduct } from '~/stores/product';
 // Components
 import TypeBlock from './TypeBlock.vue';
 import CategoryBlock from './CategoryBlock.vue';
 import PriceBlock from './PriceBlock.vue';
 
-interface I_ProductQuery {
-    categories: number[];
-    subCategories: number[];
+interface I_ProductFilter {
     type: I_Product['type'] | null;
     hasImage: boolean;
     isNew: boolean;
-    priceRange: [number, number];
+    priceRange: [number | null, number | null];
 }
 
-const queryParams = ref<I_ProductQuery>({
-    categories: [],
-    subCategories: [],
+const filter = ref<I_ProductFilter>({
     type: null,
     hasImage: false,
     isNew: false,
-    priceRange: [0, 0]
+    priceRange: [null, null]
 });
+const typeBlock = ref();
+const priceBlock = ref();
+const categoryBlock = ref();
+
+const $route = useRoute();
+const $router = useRouter();
+const productStore = useProduct();
+
+const setFilterByQueryParams = (queryParams: Partial<I_ProductFilter>) => {
+    // 这个成功了
+    typeBlock.value.handleItemClick('md');
+    // TODO:
+    // 把其余组件都写成这样的 非 setup 语法糖的形式
+    
+
+    // filter.value.type = queryParams.type ?? null;
+    // filter.value.hasImage = queryParams.hasImage ?? false;
+    // filter.value.isNew = queryParams.isNew ?? false;
+    // @ts-ignore
+    // filter.value.priceRange = queryParams.priceRange.split(',').map(priceStringOrEmptyString => {
+        // if (priceStringOrEmptyString === '') return null;
+        // return parseInt(priceStringOrEmptyString);
+    // }) ?? [null, null];
+}
+
+// watch(() => $route.query, setFilterByQueryParams, { immediate: true });
+onMounted(() => setFilterByQueryParams(toRaw($route.query)));
+
+const handleSearch = () => {
+    let categories: number[] = [], subCategories: number[] = [];
+
+    productStore.categoryList.forEach(category => {
+        if (category.isSelected) {
+            categories.push(category.id);
+        } else {
+            category.subCategories.forEach(subCategory => {
+                if (subCategory.isSelected) {
+                    subCategories.push(subCategory.id);
+                }
+            });
+        }
+    });
+
+    const filterObj = toRaw(filter.value);
+    // @ts-ignore
+    if (categories.length) filterObj.categories = categories
+    // @ts-ignore
+    if (subCategories.length) filterObj.subCategories = subCategories
+
+    $router.push(`/?${objectToUrlParams(filterObj)}`)
+};
 
 const handleChangeType = (type: I_Product['type'] | null) => {
-    queryParams.value.type = type;
+    filter.value.type = type;
+}
+
+const handleChangePriceBlock = (form: { hasImage: boolean, isNew: boolean, minPrice: number | null, maxPrice: number | null }) => {
+    filter.value.hasImage = form.hasImage;
+    filter.value.isNew = form.isNew;
+    filter.value.priceRange = [form.minPrice, form.maxPrice];
 }
 </script>
 
