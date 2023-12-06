@@ -41,19 +41,33 @@ const $router = useRouter();
 const productStore = useProduct();
 
 const setFilterByQueryParams = (queryParams: Partial<I_ProductFilter>) => {
-    // 这个成功了
-    typeBlock.value.handleItemClick('md');
-    // TODO:
-    // 把其余组件都写成这样的 非 setup 语法糖的形式
-    
+    typeBlock.value.handleItemClick(queryParams.type ?? null);
+    console.log(queryParams);
+
+    let categories: number[] = [];
+    // @ts-ignore
+    if (queryParams.categories) {
+        // @ts-ignore
+        categories = queryParams.categories.split(',').map(Number);
+    };
+    // @ts-ignore
+    let subCategories: number[] = [];
+    // @ts-ignore
+    if (queryParams.subCategories) {
+        // @ts-ignore
+        subCategories = queryParams.subCategories.split(',').map(Number);
+    };
+
+    categories.forEach(categoryId => productStore.setSelectedState(categoryId, true, false));
+    subCategories.forEach(subCategoryId => productStore.setSelectedState(subCategoryId, true, true));
 
     // filter.value.type = queryParams.type ?? null;
     // filter.value.hasImage = queryParams.hasImage ?? false;
     // filter.value.isNew = queryParams.isNew ?? false;
     // @ts-ignore
     // filter.value.priceRange = queryParams.priceRange.split(',').map(priceStringOrEmptyString => {
-        // if (priceStringOrEmptyString === '') return null;
-        // return parseInt(priceStringOrEmptyString);
+    // if (priceStringOrEmptyString === '') return null;
+    // return parseInt(priceStringOrEmptyString);
     // }) ?? [null, null];
 }
 
@@ -77,9 +91,9 @@ const handleSearch = () => {
 
     const filterObj = toRaw(filter.value);
     // @ts-ignore
-    if (categories.length) filterObj.categories = categories
+    filterObj.categories = categories;
     // @ts-ignore
-    if (subCategories.length) filterObj.subCategories = subCategories
+    filterObj.subCategories = subCategories;
 
     $router.push(`/?${objectToUrlParams(filterObj)}`)
 };
