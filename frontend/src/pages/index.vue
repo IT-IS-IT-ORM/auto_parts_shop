@@ -13,8 +13,8 @@
 // Types
 import type { I_Product } from "~/types/product";
 
-// Nuxt
-import { useNuxtApp } from "nuxt/app";
+// Router
+import { useRoute } from "vue-router";
 // Utils
 import _ from "lodash";
 // Hooks
@@ -25,13 +25,17 @@ import { API_GetProductList } from "~/service/api/product-api";
 import FilterPanel from '~/components/common/FilterPanel/index.vue';
 import ProductCard from '~/components/product/ProductCard.vue';
 
+const $route = useRoute();
 const productList = ref<I_Product[]>([]);
 
-useRequest(API_GetProductList, {
+const { run: fetchProductList } = useRequest(API_GetProductList, {
+  manual: true,
   onSuccess({ data }) {
     productList.value = data;
   }
-})
+});
+
+watch(() => $route.query, fetchProductList, { immediate: true });
 
 </script>
 
