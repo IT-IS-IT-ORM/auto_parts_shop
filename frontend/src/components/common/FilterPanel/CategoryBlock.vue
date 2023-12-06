@@ -31,6 +31,8 @@ import type { I_Category, I_SubCategory } from '~/types/product';
 // Store
 import { useProduct } from '~/stores/product';
 
+const $emit = defineEmits<{ (event: 'change', value: number): void }>();
+
 const productStore = useProduct();
 const { categoryList } = toRefs(productStore);
 
