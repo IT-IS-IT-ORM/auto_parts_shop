@@ -141,4 +141,26 @@ export const useProduct = defineStore("product", {
       ],
     };
   },
+
+  actions: {
+    setSelectedState(id: number, isSelected = true, isSubCategory = false) {
+      this.$state.categoryList.forEach((category) => {
+        if (isSubCategory) {
+          category.subCategories.forEach((subCategory) => {
+            if (subCategory.id === id) {
+              subCategory.isSelected = isSelected;
+
+              if (isSelected) {
+                category.isCollapsed = true;
+              }
+            }
+          });
+        } else {
+          if (category.id === id) {
+            category.isSelected = isSelected;
+          }
+        }
+      });
+    }
+  }
 });
