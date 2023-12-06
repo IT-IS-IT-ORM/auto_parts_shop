@@ -18,8 +18,6 @@
 // Types
 import type { I_Product } from '~/types/product';
 
-// Vue
-import { defineEmits } from 'vue';
 // Constants
 import { TYPE_LIST } from '~/constants/product-type';
 
@@ -86,7 +84,7 @@ export default {
 
         &--active {
             img {
-                transform: scale(1.1);
+                transform: scale(1.15);
             }
 
             span {
