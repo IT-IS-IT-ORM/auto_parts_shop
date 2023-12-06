@@ -26,23 +26,35 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 // Components
 import Button from '~/components/common/Button.vue';
 
-const form = ref({
-    hasImage: false,
-    isNew: false,
-    minPrice: null as number | null,
-    maxPrice: null as number | null,
-});
+export default {
+    emits: {
+        change: (value: any) => true,
+        search: () => true
+    },
 
-const $emit = defineEmits<{
-    (event: 'change', value: typeof form.value): void,
-    (event: 'search'): void
-}>();
+    components: {
+        Button
+    },
 
-watch(form, (val) => $emit('change', toRaw(val)), { deep: true });
+    setup(_, { emit }) {
+        const form = ref({
+            hasImage: false,
+            isNew: false,
+            minPrice: null as number | null,
+            maxPrice: null as number | null,
+        });
+
+        watch(form, (val) => emit('change', toRaw(val)), { deep: true });
+
+        return {
+            form
+        };
+    }
+}
 </script>
 
 <style scoped lang="scss">
