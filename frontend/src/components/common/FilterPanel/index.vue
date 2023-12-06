@@ -42,7 +42,6 @@ const productStore = useProduct();
 
 const setFilterByQueryParams = (queryParams: Partial<I_ProductFilter>) => {
     typeBlock.value.handleItemClick(queryParams.type ?? null);
-    console.log(queryParams);
 
     let categories: number[] = [];
     // @ts-ignore
@@ -61,17 +60,24 @@ const setFilterByQueryParams = (queryParams: Partial<I_ProductFilter>) => {
     categories.forEach(categoryId => productStore.setSelectedState(categoryId, true, false));
     subCategories.forEach(subCategoryId => productStore.setSelectedState(subCategoryId, true, true));
 
-    // filter.value.type = queryParams.type ?? null;
-    // filter.value.hasImage = queryParams.hasImage ?? false;
-    // filter.value.isNew = queryParams.isNew ?? false;
     // @ts-ignore
-    // filter.value.priceRange = queryParams.priceRange.split(',').map(priceStringOrEmptyString => {
-    // if (priceStringOrEmptyString === '') return null;
-    // return parseInt(priceStringOrEmptyString);
-    // }) ?? [null, null];
+    priceBlock.value.form.isNew = queryParams.isNew === "true" ?? false;
+    // @ts-ignore
+    priceBlock.value.form.hasImage = queryParams.hasImage === "true" ?? false;
+
+    let priceRange = [null, null];
+    if (queryParams.priceRange) {
+        // @ts-ignore
+        priceRange = queryParams.priceRange.split(',').map(priceStringOrEmptyString => {
+            if (priceStringOrEmptyString === '') return null;
+            return parseInt(priceStringOrEmptyString);
+        });
+    }
+
+    priceBlock.value.form.minPrice = priceRange[0];
+    priceBlock.value.form.maxPrice = priceRange[1];
 }
 
-// watch(() => $route.query, setFilterByQueryParams, { immediate: true });
 onMounted(() => setFilterByQueryParams(toRaw($route.query)));
 
 const handleSearch = () => {
