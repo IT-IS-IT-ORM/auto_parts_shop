@@ -5,8 +5,19 @@ import type { I_Product } from "~/types/product";
 // Utils
 import _fetch from "~/service/fetch";
 
-export const API_GetProductList = (): Promise<I_Response<I_Product[]>> =>
-  _fetch.get("/product/");
+interface I_ProductQuery {
+  type: I_Product["type"] | null;
+  isNew: boolean;
+  hasImage: boolean;
+  minPrice: number | null;
+  maxPrice: number | null;
+  categories: number[];
+  subCategories: number[];
+}
+
+export const API_GetProductList = (
+  queryParams: Partial<I_ProductQuery>
+): Promise<I_Response<I_Product[]>> => _fetch.get("/product/", queryParams);
 
 export const API_GetFavoriteProductList = (): Promise<
   I_Response<I_Product[]>
