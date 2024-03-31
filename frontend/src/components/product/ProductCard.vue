@@ -5,10 +5,10 @@
         <div class="whole-info-card">
             <div class="row-1">
                 <span class="title">{{ product.title }}</span>
-                <Icon v-if="!product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded" role="button"
-                    @click.stop="handleFavorite" />
-                <Icon v-if="product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-rounded" role="button"
-                    @click.stop="handleFavorite" />
+                <Icon v-if="!product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-outline-rounded"
+                    role="button" @click.stop="handleFavorite" />
+                <Icon v-if="product.isFavorite" class="favorite-icon-btn" name="material-symbols:favorite-rounded"
+                    role="button" @click.stop="handleFavorite" />
             </div>
 
             <span class="price">{{ product.price }} ₸</span>
@@ -33,8 +33,8 @@
 import type { I_Product } from '~/types/product'
 
 // Store
-import { useUser } from '~/stores/user';
-import { useModal } from '~/stores/modal';
+import { useUserStore } from '~/stores/user';
+import { useModalStore } from '~/stores/modal';
 // Hooks
 import { useRequest } from 'vue-hooks-plus';
 // API
@@ -44,8 +44,8 @@ import dateFormatter from '~/utils/formatDate';
 
 const $emit = defineEmits<{ (event: 'favorite', value: boolean): void }>();
 
-const user = useUser();
-const modal = useModal();
+const userStore = useUserStore();
+const modalStore = useModalStore();
 const route = useRoute();
 const props = defineProps<{ product: I_Product; }>();
 const { product } = toRefs(props);
@@ -61,10 +61,10 @@ const productCover = computed(() => {
 const { loading, runAsync } = useRequest(API_SetFavorite, { manual: true });
 
 const handleFavorite = () => {
-    if (!user.isAuthenticated) {
-        modal.loginReuiqredModal.open = true;
-        modal.loginReuiqredModal.nextUrl = route.path;
-        modal.loginReuiqredModal.actionDescription = 'Таңдауларға қосу';
+    if (!userStore.isAuthenticated) {
+        modalStore.loginReuiqredModal.open = true;
+        modalStore.loginReuiqredModal.nextUrl = route.path;
+        modalStore.loginReuiqredModal.actionDescription = 'Таңдауларға қосу';
         return;
     }
 
