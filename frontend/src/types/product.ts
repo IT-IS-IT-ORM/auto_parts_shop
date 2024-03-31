@@ -1,14 +1,14 @@
-import type { I_User } from "./user";
+import type { I_User } from "~/types/user";
 
 export interface I_Category {
   id: number;
   title: string;
-  parentId: null;
+  parent: null;
 }
 export interface I_SubCategory {
   id: number;
   title: string;
-  parentId: number;
+  parent: number;
 }
 
 export interface I_ProductImage {
@@ -30,4 +30,10 @@ export interface I_Product {
   seller: Omit<I_User, "token">;
   category: Array<I_Category | I_SubCategory>;
   applicable: I_SubCategory[];
+}
+
+export interface I_CategoryFilter extends I_Category {
+  isSelected: boolean;
+  isCollapsed: boolean;
+  subCategories: I_CategoryFilter[];
 }
