@@ -47,3 +47,7 @@ export const API_SetFavorite = (
   data.isFavorite
     ? _fetch.post("/favorite/", { product: data.productId })
     : _fetch.delete("/favorite/", { product: data.productId });
+
+export const API_FetchCategories = (): Promise<
+  I_Response<I_Product["category"]>
+> => _fetch.get("/category/");
