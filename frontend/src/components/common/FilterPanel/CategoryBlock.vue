@@ -5,7 +5,10 @@
     <ul class="category-list">
       <li v-for="category in categoryList" :key="category.id" class="category">
         <div class="info">
-          <a-checkbox v-model:checked="category.isSelected" />
+          <a-checkbox
+            v-if="!props.singleChoice"
+            v-model:checked="category.isSelected"
+          />
           <span>{{ category.title }}</span>
           <Icon
             :class="{ up: !category.isCollapsed }"
@@ -16,7 +19,10 @@
 
         <ul
           class="sub-category-list"
-          :class="{ 'sub-category-list--collapsed': category.isCollapsed }"
+          :class="{
+            'sub-category-list--collapsed': category.isCollapsed,
+            'sub-category-list--single-choice': props.singleChoice,
+          }"
           :style="{
             '--height': `calc(32px * ${category.subCategories.length})`,
           }"
@@ -145,6 +151,10 @@ watch(
       &--collapsed {
         height: var(--height);
         transform: scaleY(1);
+      }
+
+      &--single-choice {
+        margin-left: 0;
       }
 
       .sub-category {
