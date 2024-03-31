@@ -49,9 +49,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
         # is_favorite自定义
         product['is_favorite'] = False
-        print('user.is_authenticated: ', user.is_authenticated, user)
         if user.is_authenticated:
-            product['is_favorite'] = Favorite.objects.filter(product=product['id'], user=user).exists()
+            product['is_favorite'] = Favorite.objects.filter(
+                product=product['id'], user=user).exists()
 
         return product
 
@@ -74,10 +74,11 @@ class FavoriteSerializer(serializers.Serializer):
     product = ProductSerializer()
     user = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), write_only=True)
-    
+
     def to_representation(self, instance):
         favorite = super().to_representation(instance)
         return favorite['product']
+
 
 class SetFavoriteSerializer(serializers.Serializer):
     '''用于新增/删除收藏'''
