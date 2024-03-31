@@ -55,7 +55,7 @@ import { ref } from 'vue';
 // Vue Router
 import { useRouter } from 'vue-router';
 // Store
-import { useUser } from '~/stores/user';
+import { useUserStore } from '~/stores/user';
 // API
 import { API_UpdateInfo, API_ChangePassword } from '~/service/api/user-api';
 // Utils
@@ -68,12 +68,12 @@ import { message as AntdMessage } from 'ant-design-vue';
 import AuthTemplate from '~/components/common/AuthTemplate.vue';
 import Button from '~/components/common/Button.vue';
 
-const user = useUser();
+const userStore = useUserStore();
 const router = useRouter();
 
 const basicInfoForm = ref({
-    fullname: user.fullname,
-    phone: user.phone,
+    fullname: userStore.fullname,
+    phone: userStore.phone,
 });
 
 const changePasswordForm = ref({
@@ -85,9 +85,9 @@ const { runAsync: updateInfo, loading: updateInfoLoading } = useRequest(API_Upda
 const { runAsync: changePassword, loading: changePasswordLoading } = useRequest(API_ChangePassword, { manual: true });
 
 const handleChangeInfo = (values: any) => {
-    updateInfo(user.id, values).then(({ data }) => {
+    updateInfo(userStore.id, values).then(({ data }) => {
         localStorage.set('user', data);
-        user.$state = data;
+        userStore.$state = data;
         AntdMessage.success('Өзгеріс сақталды!');
     }).catch(error => {
         AntdMessage.error(error.message);
@@ -104,7 +104,7 @@ const handleChangePassword = (values: any) => {
 
 const handleLogout = () => {
     localStorage.set('user', defaultUserState);
-    user.$state = defaultUserState;
+    userStore.$state = defaultUserState;
     router.replace('/auth/login');
 }
 </script>

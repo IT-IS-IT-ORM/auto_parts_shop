@@ -12,7 +12,7 @@
                 </template>
                 <ProfileSettings />
             </a-tab-pane>
-            <a-tab-pane v-if="user.role === role.provider" key="product">
+            <a-tab-pane v-if="userStore.role === role.provider" key="product">
                 <template #tab>
                     <span>
                         <Icon name="icon-park-outline:ad-product" />
@@ -47,14 +47,14 @@
 // Router
 import { useRoute, useRouter } from 'vue-router';
 // Store
-import { useUser } from '~/stores/user';
+import { useUserStore } from '~/stores/user';
 // Component
 import ProfileSettings from '~/components/profile_page/ProfileSettings.vue'
 import ProfileMyOrder from '~/components/profile_page/ProfileMyOrder.vue'
 import ProfileMyFavorite from '~/components/profile_page/ProfileMyFavorite.vue'
 import ProfileMyProduct from '~/components/profile_page/ProfileMyProduct.vue'
 
-const user = useUser();
+const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
 

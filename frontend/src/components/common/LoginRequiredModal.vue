@@ -1,7 +1,7 @@
 <template>
-  <a-modal v-model:open="modal.loginReuiqredModal.open" title="Авторизация керек" ok-text="Авторизация"
+  <a-modal v-model:open="modalStore.loginReuiqredModal.open" title="Авторизация керек" ok-text="Авторизация"
     cancel-text="Болдырмау" @ok="handleOk">
-    <p>{{ `${modal.loginReuiqredModal.actionDescription} үшін авторизациядан өтіңіз` }}</p>
+    <p>{{ `${modalStore.loginReuiqredModal.actionDescription} үшін авторизациядан өтіңіз` }}</p>
   </a-modal>
 </template>
 
@@ -9,16 +9,16 @@
 // Vue Router
 import { useRouter } from 'vue-router';
 // Store
-import { useModal } from '~/stores/modal';
+import { useModalStore } from '~/stores/modal';
 
-const modal = useModal();
+const modalStore = useModalStore();
 const router = useRouter();
 
 const handleOk = () => {
-  router.push(`/auth/login?nextUrl=${modal.loginReuiqredModal.nextUrl}`);
-  modal.loginReuiqredModal.open = false;
-  modal.loginReuiqredModal.nextUrl = '/';
-  modal.loginReuiqredModal.actionDescription = '';
+  router.push(`/auth/login?nextUrl=${modalStore.loginReuiqredModal.nextUrl}`);
+  modalStore.loginReuiqredModal.open = false;
+  modalStore.loginReuiqredModal.nextUrl = '/';
+  modalStore.loginReuiqredModal.actionDescription = '';
 }
 </script>
 

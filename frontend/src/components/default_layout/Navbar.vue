@@ -45,13 +45,13 @@
 
 <script setup lang="ts">
 // Store
-import { useUser } from '~/stores/user';
-import { useModal } from '~/stores/modal';
+import { useUserStore } from '~/stores/user';
+import { useModalStore } from '~/stores/modal';
 // Componentns
 import Button from '~/components/common/Button.vue';
 
-const user = useUser();
-const modal = useModal();
+const userStore = useUserStore();
+const modalStore = useModalStore();
 const router = useRouter();
 import { useEventListener } from "vue-hooks-plus";
 
@@ -80,22 +80,22 @@ function onWindowScroll() {
 }
 
 const handleNav = (path: string) => {
-  if (user.isAuthenticated) {
+  if (userStore.isAuthenticated) {
     router.push(path);
     return;
   }
 
-  modal.loginReuiqredModal.open = true;
-  modal.loginReuiqredModal.nextUrl = path;
+  modalStore.loginReuiqredModal.open = true;
+  modalStore.loginReuiqredModal.nextUrl = path;
   switch (path) {
     case '/profile?tab=settings':
-      modal.loginReuiqredModal.actionDescription = 'Жекепарақшаға өту';
+      modalStore.loginReuiqredModal.actionDescription = 'Жекепарақшаға өту';
       break;
     case '/profile?tab=favorite':
-      modal.loginReuiqredModal.actionDescription = 'Таңдауларді көру';
+      modalStore.loginReuiqredModal.actionDescription = 'Таңдауларді көру';
       break;
     case '/product/add':
-      modal.loginReuiqredModal.actionDescription = 'Объявление шығару';
+      modalStore.loginReuiqredModal.actionDescription = 'Объявление шығару';
   }
 };
 </script>

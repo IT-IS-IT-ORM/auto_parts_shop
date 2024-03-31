@@ -13,7 +13,7 @@ import type { I_Product } from '~/types/product';
 // Routes
 import { useRoute, useRouter } from 'vue-router';
 // Store
-import { useProduct } from '~/stores/product';
+import { useProductStore } from '~/stores/product';
 // Components
 import TypeBlock from './TypeBlock.vue';
 import CategoryBlock from './CategoryBlock.vue';
@@ -38,7 +38,7 @@ const categoryBlock = ref();
 
 const $route = useRoute();
 const $router = useRouter();
-const productStore = useProduct();
+const productStore = useProductStore();
 
 const setFilterByQueryParams = (queryParams: Partial<I_ProductFilter>) => {
     typeBlock.value.handleItemClick(queryParams.type ?? null);
