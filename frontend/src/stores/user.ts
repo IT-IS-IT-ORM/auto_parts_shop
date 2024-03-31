@@ -5,7 +5,7 @@ import type { I_User } from "~/types/user";
 import { defineStore } from "pinia";
 
 // Utils
-import _ from "lodash";
+import { localStorage } from "~/utils/localStorage";
 
 export const defaultUserState: I_User = {
   id: -1,
@@ -16,18 +16,15 @@ export const defaultUserState: I_User = {
   token: "",
 };
 
-export const useUser = defineStore("user", {
-  state: () => {
+export const useUserStore = defineStore("user", {
+  state: (): I_User => {
     return defaultUserState;
   },
 
   actions: {
     initUserFromLocal() {
-      const user = localStorage.get("user", defaultUserState) as I_User;
-
-      if (!_.isEqual(user, defaultUserState)) {
-        this.$state = user;
-      }
+      const user = localStorage.get("user", defaultUserState);
+      this.$state = user;
     },
 
     logout() {

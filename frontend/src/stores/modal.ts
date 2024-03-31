@@ -12,7 +12,7 @@ export const defaultModalState = {
   },
 };
 
-export const useModal = defineStore("modal", {
+export const useModalStore = defineStore("modal", {
   state: () => {
     return defaultModalState;
   },
