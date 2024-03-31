@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <span class="title">Категория</span>
+    <span class="title">{{ props.title }}</span>
 
     <ul class="category-list">
       <li v-for="category in categoryList" :key="category.id" class="category">
@@ -40,17 +40,32 @@
 import type { I_CategoryFilter } from "~/types/product";
 
 // Vue
-import { toRaw, reactive, watch } from "vue";
+import { reactive, watch } from "vue";
 // Store
 import { useProductStore } from "~/stores/product";
+
+const props = defineProps({
+  title: {
+    type: String,
+    default: "Категория",
+  },
+  singleChoice: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const emit = defineEmits<{
   (event: "change", value: I_CategoryFilter[]): void;
 }>();
 
+const toRawByJSON = (variable: unknown) => {
+  return JSON.parse(JSON.stringify(variable));
+};
+
 const productStore = useProductStore();
 const categoryList = reactive<I_CategoryFilter[]>(
-  toRaw(productStore.categoryList).map((category: any) => {
+  toRawByJSON(productStore.categoryList).map((category: any) => {
     const isParentCategory = category.parentId !== null;
     category.isSelected = false;
     if (isParentCategory) {
@@ -67,13 +82,22 @@ const categoryList = reactive<I_CategoryFilter[]>(
 
 watch(
   () => categoryList,
-  (newVal) => emit("change", toRaw(newVal)),
+  (newVal, oldVal) => {
+    console.log(newVal, oldVal);
+
+    // emit("change", toRawByJSON(newVal))
+  },
   { deep: true }
 );
 </script>
 
 <style scoped lang="scss">
 @import "~/assets/style/mixins.scss";
+
+.block > .title {
+  display: block;
+  margin-bottom: 4px;
+}
 
 .category-list {
   max-width: 240px;
