@@ -40,13 +40,26 @@ import kk_KZ from "ant-design-vue/locale/kk_KZ";
 import { ANTD_THEME } from '~/constants/antd-theme';
 // Vue
 import { onBeforeMount } from "vue";
+// API
+import { API_FetchCategories } from '~/service/api/product-api';
+// Hooks
+import { useRequest } from 'vue-hooks-plus';
 // Store
-import { useUser } from "~/stores/user";
+import { useUserStore } from "~/stores/user";
+import { useProductStore } from "~/stores/product";
+
+// 获取商品分类 (全局)
+useRequest(API_FetchCategories, {
+  onSuccess(response) {
+    const productStore = useProductStore();
+    productStore.categoryList = response.data;
+  }
+});
 
 // 初始化 Store
 onBeforeMount(() => {
-  const user = useUser();
-  user.initUserFromLocal();
+  const userStore = useUserStore();
+  userStore.initUserFromLocal();
 });
 </script>
 
