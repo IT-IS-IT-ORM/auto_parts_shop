@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   srcDir: "src/",
 
+  ssr: false,
+
   devtools: { enabled: false },
 
   css: [
