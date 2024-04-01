@@ -10,6 +10,7 @@
         <a-flex vertical gap="24">
           <a-form-item
             name="category"
+            :autoLink="false"
             :rules="[
               {
                 required: true,
@@ -19,7 +20,7 @@
           >
             <CategoryBlock singleChoice />
           </a-form-item>
-          <a-form-item name="applicable">
+          <a-form-item name="applicable" :autoLink="false">
             <CategoryBlock title="Жарамды категориялар" />
           </a-form-item>
         </a-flex>
