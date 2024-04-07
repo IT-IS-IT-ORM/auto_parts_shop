@@ -18,10 +18,16 @@
               },
             ]"
           >
-            <CategoryBlock singleChoice />
+            <CategoryBlock
+              singleChoice
+              @pick="(category) => (formState.category = category)"
+            />
           </a-form-item>
           <a-form-item name="applicable" :autoLink="false">
-            <CategoryBlock title="Жарамды категориялар" />
+            <CategoryBlock
+              title="Жарамды категориялар"
+              @change="updateApplicable"
+            />
           </a-form-item>
         </a-flex>
 
@@ -107,23 +113,34 @@
 </template>
 
 <script setup lang="ts">
+// Types
+import type { I_CategoryFilter, I_SubCategory } from "~/types/product";
+
 // Vue
 import { defineComponent, reactive } from "vue";
+// Store
+import { useUserStore } from "~/stores/user";
+// Hooks
+import { useRequest } from "vue-hooks-plus";
+// API
+import { API_AddProduct } from "~/service/api/product-api";
 // Constants
 import { TYPE_LIST } from "~/constants/product-type";
 // Components
 import CategoryBlock from "~/components/common/FilterPanel/CategoryBlock.vue";
+import { message } from "ant-design-vue";
 
 defineComponent({ name: "AddProductForm" });
 
+const userStore = useUserStore();
 const formState = reactive({
   title: "",
   description: "",
   price: 5000,
   isNew: true,
   type: "sm",
-  category: null,
-  applicable: [],
+  category: null as I_SubCategory["id"] | null,
+  applicable: [] as I_CategoryFilter["id"][],
   gallery: [] as File[],
 });
 
@@ -140,7 +157,42 @@ const removeImage = (file: File) => {
   );
 };
 
-const onFinish = (values: typeof formState) => {};
+const updateApplicable = (applicable: I_CategoryFilter[]) => {
+  const selectedApplicable = [] as I_CategoryFilter["id"][];
+  applicable.forEach((category) => {
+    if (category.isSelected) {
+      selectedApplicable.push(
+        ...category.subCategories.map((subCategory) => subCategory.id)
+      );
+    } else {
+      category.subCategories.forEach((subCategory) => {
+        subCategory.isSelected && selectedApplicable.push(subCategory.id);
+      });
+    }
+  });
+  formState.applicable = selectedApplicable;
+};
+
+const { run: addProduct, loading: loadingAddProduct } = useRequest(
+  API_AddProduct,
+  {
+    manual: true,
+    onSuccess(response) {
+      if (response.isOk) {
+        message.success("Объявление жарияланды");
+      }
+    },
+    onError(error) {
+      message.error(error.message);
+    },
+  }
+);
+
+const onFinish = (values: typeof formState) => {
+  console.log("values: ", values.applicable);
+
+  // addProduct({ ...values, seller: userStore.id });
+};
 </script>
 
 <style scoped lang="scss">
