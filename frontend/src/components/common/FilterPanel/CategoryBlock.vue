@@ -7,7 +7,8 @@
         <div class="info">
           <a-checkbox
             v-if="!props.singleChoice"
-            v-model:checked="category.isSelected"
+            :checked="category.isSelected"
+            @click="handleClickCategory(category)"
           />
           <span>{{ category.title }}</span>
           <Icon
@@ -28,13 +29,26 @@
           }"
         >
           <li
+            v-if="!props.singleChoice"
             v-for="subCategory in category.subCategories"
             :key="subCategory.id"
             class="sub-category"
           >
-            <a-checkbox v-model:checked="subCategory.isSelected" />
+            <a-checkbox
+              :checked="subCategory.isSelected"
+              @click="handleClickSubCategory(subCategory)"
+            />
             <span>{{ subCategory.title }}</span>
           </li>
+
+          <a-radio-group v-else v-model:value="selectedCategory">
+            <a-radio
+              v-for="subCategory in category.subCategories"
+              :value="subCategory.id"
+            >
+              {{ subCategory.title }}
+            </a-radio>
+          </a-radio-group>
         </ul>
       </li>
     </ul>
@@ -43,10 +57,10 @@
 
 <script setup lang="ts">
 // Types
-import type { I_CategoryFilter } from "~/types/product";
+import type { I_CategoryFilter, I_SubCategory } from "~/types/product";
 
 // Vue
-import { reactive, watch } from "vue";
+import { reactive, watch, ref } from "vue";
 // Store
 import { useProductStore } from "~/stores/product";
 
@@ -62,6 +76,11 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
+  (
+    // for single choice mode
+    event: "pick",
+    value: I_SubCategory["id"] | null
+  ): void;
   (event: "change", value: I_CategoryFilter[]): void;
 }>();
 
@@ -69,6 +88,8 @@ const toRawByJSON = (variable: unknown) => {
   return JSON.parse(JSON.stringify(variable));
 };
 
+// for single choice mode
+const selectedCategory = ref<number | null>(null);
 const productStore = useProductStore();
 const categoryList = reactive<I_CategoryFilter[]>(
   toRawByJSON(productStore.categoryList).map((category: any) => {
@@ -86,14 +107,42 @@ const categoryList = reactive<I_CategoryFilter[]>(
   })
 );
 
-watch(
-  () => categoryList,
-  (newVal, oldVal) => {
-    console.log(newVal, oldVal);
+const handleClickCategory = (category: I_CategoryFilter) => {
+  const isChecked = !category.isSelected;
+  category.isSelected = isChecked;
+  category.subCategories.forEach((subCategory) => {
+    subCategory.isSelected = isChecked;
+  });
 
-    // emit("change", toRawByJSON(newVal))
-  },
-  { deep: true }
+  emit("change", toRawByJSON(categoryList));
+};
+
+const handleClickSubCategory = (subCategory: I_CategoryFilter) => {
+  const isChecked = !subCategory.isSelected;
+  subCategory.isSelected = isChecked;
+
+  let parentCategory = null as unknown as I_CategoryFilter;
+  categoryList.forEach((category) => {
+    if (
+      category.subCategories.find(
+        (_subCategory) => subCategory.id === _subCategory.id
+      )
+    ) {
+      parentCategory = category;
+    }
+  });
+
+  const isAllSelected = parentCategory.subCategories.every(
+    (subCategory) => subCategory.isSelected
+  );
+  parentCategory.isSelected = isAllSelected;
+
+  emit("change", toRawByJSON(categoryList));
+};
+
+watch(
+  () => selectedCategory.value,
+  (newVal) => emit("pick", newVal)
 );
 </script>
 
@@ -176,6 +225,10 @@ watch(
       top: 45%;
       left: 24%;
     }
+  }
+
+  :deep(.ant-radio-wrapper) {
+    margin: 0 8px 8px 0;
   }
 
   @media screen and (max-width: 768px) {
