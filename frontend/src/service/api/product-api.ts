@@ -24,6 +24,9 @@ export const API_GetFavoriteProductList = (): Promise<
   I_Response<I_Product[]>
 > => _fetch.get(`/favorite/`);
 
+export const API_GetMyProductList = () =>
+  _fetch.get<I_Product[]>("/product/mine/");
+
 export const API_GetProduct = (
   productId: number
 ): Promise<I_Response<I_Product>> => _fetch.get(`/product/${productId}/`);
