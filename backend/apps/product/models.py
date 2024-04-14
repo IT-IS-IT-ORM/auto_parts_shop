@@ -30,7 +30,7 @@ class Product(models.Model):
     )
 
     title = models.CharField(max_length=32)
-    description = models.TextField()
+    description = models.TextField(default='')
     price = models.IntegerField()
     is_new = models.BooleanField()
     type = models.CharField(max_length=2, choices=avaliable_types, verbose_name='商品类型')
@@ -38,9 +38,8 @@ class Product(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True)
     # Sub Category ↓
-    category = models.ForeignKey(
-        Category, null=True, on_delete=models.SET_NULL)
-    applicable = models.ManyToManyField(Category, related_name='applicables')
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    applicable = models.CharField(max_length=254, verbose_name='适配的类型')
 
     def __str__(self):
         return f'🎈 {self.title}'
@@ -52,7 +51,7 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.FileField(upload_to='product', null=True)
+    image = models.FileField(upload_to='product')
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
 
     def __str__(self):
