@@ -131,6 +131,7 @@ import { useRequest } from "vue-hooks-plus";
 // API
 import { API_AddProduct } from "~/service/api/product-api";
 // Constants
+import { INITIAL_PRODUCT_FORMSTATE } from "~/constants/product";
 import { TYPE_LIST } from "~/constants/product-type";
 // Components
 import CategoryBlock from "~/components/common/FilterPanel/CategoryBlock.vue";
@@ -139,16 +140,7 @@ import { message } from "ant-design-vue";
 defineOptions({ name: "AddProductForm" });
 
 const userStore = useUserStore();
-const formState = reactive({
-  title: "",
-  description: "",
-  price: 5000,
-  isNew: true,
-  type: "sm",
-  category: null as I_SubCategory["id"] | null,
-  applicable: [] as I_CategoryFilter["id"][],
-  gallery: [] as File[],
-});
+const formState = reactive(INITIAL_PRODUCT_FORMSTATE);
 
 const beforeUpload = (file: File) => {
   formState.gallery.push(file);
