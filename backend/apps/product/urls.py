@@ -1,5 +1,5 @@
 from django.urls import path
-from product.views import ProductViewSet, CategoryViewSet
+from product.views import ProductViewSet, CategoryViewSet, MyProductAPI
 
 from rest_framework import routers
 from django.conf import settings
@@ -13,4 +13,6 @@ else:
 router.register(r'category', CategoryViewSet)
 router.register(r'product', ProductViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('product/mine/', MyProductAPI.as_view())
+] + router.urls
