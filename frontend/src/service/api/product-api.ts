@@ -1,7 +1,8 @@
 // Types
 import type { I_Response } from "~/types/api";
 import type { I_Product } from "~/types/product";
-
+// Vue
+import { toRaw } from "vue";
 // Utils
 import _fetch from "~/service/fetch";
 
@@ -34,7 +35,26 @@ export const API_UpdateProduct = (
   _fetch.patch(`/product/${productId}/`, data);
 
 export const API_AddProduct = (data: {}): Promise<I_Response<I_Product>> =>
-  _fetch.post("/product/", data);
+  _fetch.post("/product/", data, {
+    payloadCustomize() {
+      const formData = new FormData();
+      // @ts-ignore
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === "applicable") {
+          value = (value as number[]).join(",");
+        } else if (key === "gallery") {
+          (value as File[]).forEach((file) => {
+            formData.append(key, file);
+          });
+          return;
+        }
+        // @ts-ignore
+        formData.append(key, toRaw(value).toString());
+      });
+
+      return formData;
+    },
+  });
 
 export interface API_SetFavorite_Data {
   productId: number;
