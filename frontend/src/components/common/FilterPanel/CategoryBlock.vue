@@ -149,11 +149,6 @@ watch(
 <style scoped lang="scss">
 @import "~/assets/style/mixins.scss";
 
-.block > .title {
-  display: block;
-  margin-bottom: 4px;
-}
-
 .category-list {
   max-width: 240px;
   padding: 16px 24px;
