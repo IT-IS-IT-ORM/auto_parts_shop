@@ -102,7 +102,13 @@
           </a-form-item>
 
           <a-form-item>
-            <a-button block size="large" type="primary" html-type="submit">
+            <a-button
+              block
+              size="large"
+              type="primary"
+              html-type="submit"
+              :loading="loadingAddProduct"
+            >
               Жариялау
             </a-button>
           </a-form-item>
@@ -189,9 +195,7 @@ const { run: addProduct, loading: loadingAddProduct } = useRequest(
 );
 
 const onFinish = (values: typeof formState) => {
-  console.log("values: ", values.applicable);
-
-  // addProduct({ ...values, seller: userStore.id });
+  addProduct({ ...values, seller: userStore.id });
 };
 </script>
 
