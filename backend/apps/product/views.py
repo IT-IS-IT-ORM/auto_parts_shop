@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 
 from product.models import Product, Category
 from product.serializers import ProductSerializer, CategorySerializer
@@ -9,6 +10,7 @@ class ProductViewSet(ModelViewSet):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    parser_classes = [JSONParser, MultiPartParser, FileUploadParser]
 
     def get_serializer_context(self):
         """
