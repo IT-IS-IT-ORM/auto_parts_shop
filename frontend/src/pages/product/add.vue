@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 // Vue
-import { defineComponent } from 'vue';
+import { defineOptions } from 'vue';
 // Components
 import AddProductForm from '~/components/product/AddProductForm.vue';
 
-defineComponent({ name: 'ProductAddPage' });
+defineOptions({ name: 'ProductAddPage' });
 </script>
 
 <style scoped lang="scss">

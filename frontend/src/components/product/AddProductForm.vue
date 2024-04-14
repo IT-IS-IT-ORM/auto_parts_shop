@@ -123,7 +123,7 @@
 import type { I_CategoryFilter, I_SubCategory } from "~/types/product";
 
 // Vue
-import { defineComponent, reactive } from "vue";
+import { defineOptions, reactive } from "vue";
 // Store
 import { useUserStore } from "~/stores/user";
 // Hooks
@@ -136,7 +136,7 @@ import { TYPE_LIST } from "~/constants/product-type";
 import CategoryBlock from "~/components/common/FilterPanel/CategoryBlock.vue";
 import { message } from "ant-design-vue";
 
-defineComponent({ name: "AddProductForm" });
+defineOptions({ name: "AddProductForm" });
 
 const userStore = useUserStore();
 const formState = reactive({
