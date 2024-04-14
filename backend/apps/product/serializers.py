@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    seller = UserSerializer()
+    applicable = serializers.CharField(required=False)
 
     class Meta:
         model = Product
@@ -29,14 +29,11 @@ class ProductSerializer(serializers.ModelSerializer):
         categories.append(category)
         categories.append(subCategory)
 
+        seller_id = int(product['seller'])
+        product['seller'] = UserSerializer(User.objects.get(id=seller_id)).data
+
         # category自定义
         product['category'] = CategorySerializer(categories, many=True).data
-
-        # applicable里自定义 没有用到serializer 而是调用Model里的__str__函数
-        for index, item in enumerate(product['applicable']):
-            applicable = Category.objects.get(id=item)
-            product['applicable'][index] = {'id': applicable.id,
-                                            'title': str(applicable)}
 
         # gallery自定义
         gallery = ProductImage.objects.filter(product=product['id'])
@@ -52,6 +49,26 @@ class ProductSerializer(serializers.ModelSerializer):
         if user.is_authenticated:
             product['is_favorite'] = Favorite.objects.filter(
                 product=product['id'], user=user).exists()
+
+        # applicable自定义
+        applicable = []
+        def is_not_empty_string(str_id): return str_id != ''
+        applicable_ids = filter(is_not_empty_string,
+                                product['applicable'].split(','))
+
+        for str_id in applicable_ids:
+            category = Category.objects.get(id=int(str_id))
+            applicable.append(CategorySerializer(instance=category).data)
+
+        product['applicable'] = applicable
+
+        return product
+
+    def create(self, validated_data):
+        product = super().create(validated_data)
+
+        for file in self.context['request'].FILES.getlist('gallery'):
+            ProductImage.objects.create(image=file, product=product).save()
 
         return product
 
