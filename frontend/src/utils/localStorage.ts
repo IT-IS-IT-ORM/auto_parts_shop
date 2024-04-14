@@ -1,28 +1,24 @@
 /**
- * 高度自定义的 `localStorage` 工具函数
- *
- * 主要用于
- *     1. `recoil atom` 的初始化定义
- * 	   2. `axios` 请求拦截器
- * 	   3. 其他各种的 初始化任务
+ * 封装版 `localStorage` 工具函数
  *
  * 备注:
  *     写入数据前, 会先调用一次 `serializer`
  *     读取数据后, 会先调用一次 `deserializer`
- *     内置了版本检测, 需要在每次 `deploy` 至服务器时 手动修改版本号
+ *     内置了版本检测, 需要在每次 deploy 至服务器时 手动修改版本号
  *
  * 修改时间: 2022-07-17
+ * 修改时间: 2024-04-14
  */
 
 export interface localStorageProperties {
   // 读
-  get<T>(
+  get<T, E>(
     key: string,
     // 默认值
-    defaultValue: T,
+    defaultValue: E,
     // 反序列化方法
     deserializer?: (value: string) => T
-  ): T;
+  ): T | E;
   // 写
   set<T>(
     key: string,
@@ -31,6 +27,8 @@ export interface localStorageProperties {
     // 序列化方法
     serializer?: (value: T) => string
   ): void;
+  // 删
+  remove(key: string): void;
 
   // 数据前缀, 用于和其他数据做区分 (建议: 项目名)
   _DATA_PREFIX: string;
@@ -44,31 +42,28 @@ export interface localStorageProperties {
 
 export const localStorage: localStorageProperties = {
   get(key, defaultValue, deserializer?) {
-    if (!process.browser) return defaultValue;
+    if (!window) return defaultValue;
+
     let data = window.localStorage.getItem(key);
 
-    // key 存在
-    if (data) {
-      // 检测版本号
-      if (this._checkDataVersion(data)) {
-        // 移除版本号信息
-        data = data.replace(this._VERSION_MARK_STRING, "");
+    // key 存在 && 检查版本号
+    if (data && this._checkDataVersion(data)) {
+      // 移除版本号信息
+      data = data.replace(this._VERSION_MARK_STRING, "");
 
-        let deserializedData;
-        // 执行反序列化
-        try {
-          deserializedData = deserializer?.(data) ?? JSON.parse(data);
-        } catch (error) {
-          console.error(`localStorage.get 反序列化异常: \n${error}`);
-          deserializedData = defaultValue;
-        }
-
-        return deserializedData;
+      let deserializedData;
+      // 执行反序列化
+      try {
+        deserializedData = deserializer?.(data) ?? JSON.parse(data);
+      } catch (error) {
+        console.error(`localStorage.get(${key}) 反序列化异常:\n${error}`);
+        deserializedData = defaultValue;
       }
-      console.warn("本地数据版本不一致");
+
+      return deserializedData;
     }
 
-    console.warn("本地数据不存在");
+    console.warn(`本地数据 ${key}\n不存在或版本不一致`);
     return defaultValue;
   },
 
@@ -86,6 +81,10 @@ export const localStorage: localStorageProperties = {
 
   get _VERSION_MARK_STRING() {
     return `${this._DATA_PREFIX}=${this._DATA_VERSION};`;
+  },
+
+  remove(key) {
+    return window.localStorage.removeItem(key);
   },
 
   _checkDataVersion(data) {
