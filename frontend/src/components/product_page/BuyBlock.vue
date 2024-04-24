@@ -16,7 +16,14 @@
       </h1>
     </div>
     <span class="price">{{ product.price }} тг</span>
-    <Button v-if="userStore.role === role.consumer" block>Заказ жасау</Button>
+    <Button
+      v-if="userStore.role === role.consumer"
+      block
+      :loading="loadingCreateOrder"
+      @click="createOrder(product.id)"
+    >
+      Заказ жасау
+    </Button>
   </div>
 </template>
 
@@ -24,19 +31,38 @@
 // Types
 import type { I_Product } from "~/types/product";
 
+// Router
+import { useRouter } from "vue-router";
 // Store
 import { useUserStore } from "~/stores/user";
+// API
+import { API_CreateOrder } from "~/service/api/order-api";
+// Hooks
+import { useRequest } from "vue-hooks-plus";
 // Utils
 import { role } from "~/utils/role";
 import dateFormatter from "~/utils/formatDate";
 // Components
 import Button from "~/components/common/Button.vue";
+import { message } from "ant-design-vue";
 
 defineProps<{
   product: I_Product;
 }>();
 
+const router = useRouter();
 const userStore = useUserStore();
+
+const { run: createOrder, loading: loadingCreateOrder } = useRequest(
+  API_CreateOrder,
+  {
+    manual: true,
+    onSuccess() {
+      message.success("Сатып алу сәтті аяқталды");
+      router.push("/profile?tab=order");
+    },
+  }
+);
 </script>
 
 <style scoped lang="scss">
