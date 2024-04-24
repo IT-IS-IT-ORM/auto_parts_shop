@@ -23,7 +23,7 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     initUserFromLocal() {
-      const user = localStorage.get("user", defaultUserState);
+      const user = localStorage.get<I_User, I_User>("user", defaultUserState);
       this.$state = user;
     },
 
