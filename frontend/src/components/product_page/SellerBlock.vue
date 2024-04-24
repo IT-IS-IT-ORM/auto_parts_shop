@@ -12,7 +12,10 @@
             </div>
         </div>
 
-        <Button block>Сатушының барлық заты</Button>
+        <Button v-if="userStore.role === role.consumer" block 
+            @click="$router.push(`/?seller=${product.seller.id}`)">
+            Сатушының барлық заты
+        </Button>
     </div>
 </template>
 
@@ -20,6 +23,10 @@
 // Types
 import type { I_Product } from '~/types/product';
 
+// Store
+import { useUserStore } from "~/stores/user";
+// Utils
+import { role } from "~/utils/role";
 // Components
 import Button from '~/components/common/Button.vue';
 import UserAvatar from '~/assets/image/UserAvatar.vue';
@@ -27,6 +34,8 @@ import UserAvatar from '~/assets/image/UserAvatar.vue';
 const props = defineProps<{
     product: I_Product
 }>();
+
+const userStore = useUserStore();
 
 const totalRegisterDate = computed(() => {
     const today = new Date(Date.now());
